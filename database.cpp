@@ -86,7 +86,18 @@ template <class T> T relation<T>::retrieve(int id)
     x.setid(-1);
     return x;
 }
+template <class T> void relation<T>::modify(int id,patient_f* p)
+{
+    T* tmp=retrive(id);
+    if (T->getid()==-1)
+    {
+        return;
+    }
+    remove(id);
+    insert(p);
+    return;
 
+}
 
 
     
