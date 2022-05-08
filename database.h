@@ -1,4 +1,19 @@
 
+template <class T> class Maindata
+{
+    public:
+    void insert(patient* p);
+    bool search(int id);
+    void modify(int id,patient* p);
+
+
+    private:
+    relation<Person> person;
+    relation<Medical_Status> medical_status;
+    relation<Registration> registration;
+    relation<Treatment> treatment;
+
+};
 template<class T> class relation
 {
     public:
