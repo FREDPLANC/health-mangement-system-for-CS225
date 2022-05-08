@@ -14,9 +14,9 @@ class ID:: int getid()
     return id;
 }
 
-class ID:: void setid()
+class ID:: void setid(int t)
 {
-   //
+   id= t;
 }
 
 
