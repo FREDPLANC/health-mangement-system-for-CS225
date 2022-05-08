@@ -5,6 +5,10 @@ template <class T> class Maindata
     void insert(patient* p);
     bool search(int id);
     void modify(int id,patient* p);
+    void modifyperson(int id,patient* p);
+    void modifystatus(int id,patient* p);
+    void modifyregistration(int id,patient* p);
+    void modifytreatment(int id,patient* p);
 
 
     private:
