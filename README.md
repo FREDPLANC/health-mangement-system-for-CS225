@@ -1,4 +1,4 @@
 # SHIT_ASS
-lyx is our son!!!
-基拉基拉
-k-fucking-d 
+lyx is our son!!!/n
+基拉基拉/n
+k-fucking-d /n
