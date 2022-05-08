@@ -61,13 +61,25 @@ template <class T> bool relation<T>::insert(patient_f* p)
     T record=new T(patient_f* p;);
     // iterate through the list
     for (typename list< Block<T> >::iterator iter=this->blocks.begin(); iter != this->blocks.end(); ++iter)
-    if (!iter->full()) { // if this block is not full, insert into it
+    {
+        if (!iter->full()) { // if this block is not full, insert into it
         iter->overflowBuffer.push_back(record);
         // if after insertion the block is full, sort it.
         if (iter->full()) iter->Sort();
         all_full = false;
         return true;
+        }
     }
+    // if new block is needed
+    if (blocks.empty() || all_full) {
+        Block<T> newBlock;
+        newBlock.overflowBuffer.push_back(record);
+        blocks.push_back(newBlock);
+        return true;
+    }
+
+    // unreachable
+    return false;
 }
 template <class T> bool relation<T>::search(int id)
 {

@@ -40,24 +40,16 @@ template<class T> class relation
 template<class T> class block
 {
     public:
-        int max_length = 5;
         std::vector<T> array;
         std::vector<T> overflowBuffer;
         int index;
-        bool full() {
-            return ((int)array.size() == MAX_LENGTH || (int)overflowBuffer.size() == MAX_LENGTH);
-        }
-        int size() {
-            if ((int)array.size() != 0) return (int)array.size();
-            else return (int)overflowBuffer.size();
-        }
-        void Sort();
+
+
+    private:
+        
+
+
 };
-template<class T> void block<T>::Sort() {
-    std::sort(this->overflowBuffer.begin(), this->overflowBuffer.end());
-    overflowBuffer.swap(array);
-    overflowBuffer.clear();
-}
 
 class ID
 {
@@ -97,15 +89,3 @@ class Treatment :public ID
 
     private:
 };
-template<class T> T relation<T>::retrieve(int key) {
-    // search through the link
-    for (typename list< Block<T> >::iterator iter=this->blocks.begin(); iter != this->blocks.end(); ++iter) {
-        vector<T>& A = (iter->full()) ? iter->array : iter->overflowBuffer;
-        for (int i=0;i<(int)A.size();i++)
-        if (A[i].getRecordID() == key)
-        return A[i];
-    }
-    T x;
-    x.setRecordID(-1);
-    return x;
-}
