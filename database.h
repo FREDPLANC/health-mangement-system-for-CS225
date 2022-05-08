@@ -26,8 +26,8 @@ class ID
 {
     public:
         int id;
-        void getid();
-        void setid();
+        int getid();
+        void setid(int t);
 
 
 }
