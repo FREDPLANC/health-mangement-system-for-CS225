@@ -1,14 +1,18 @@
-
+#include <list>
+#include <algorithm>
+#include <cstdlib>
+#include <string>
+using namespace std;
 template <class T> class Maindata
 {
     public:
-    void insert(patient* p);
+    void insert(patient_f* p);
     bool search(int id);
-    void modify(int id,patient* p);
-    void modifyperson(int id,patient* p);
-    void modifystatus(int id,patient* p);
-    void modifyregistration(int id,patient* p);
-    void modifytreatment(int id,patient* p);
+    void modify(int id,patient_f* p);
+    void modifyperson(int id,patient_f* p);
+    void modifystatus(int id,patient_f* p);
+    void modifyregistration(int id,patient_f* p);
+    void modifytreatment(int id,patient_f* p);
 
 
     private:
@@ -22,16 +26,17 @@ template<class T> class relation
 
 {
     public:
-        bool insert(patient* p);
+        bool insert(patient_f* p);
         bool search(int id);
         bool remove(int key);
         T retrieve(int key);
         bool merge(int blockID_1, int blockID_2);
-        
+        int 
 
     private:
         list<Block<T>> blocks;
 };
+
 template<class T> class block
 {
     public:
@@ -50,8 +55,8 @@ class ID
 {
     public:
         int id;
-        int getid();
-        void setid(int t);
+        void getid();
+        void setid();
 
 
 }
