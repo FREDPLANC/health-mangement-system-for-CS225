@@ -19,14 +19,19 @@ template <class T> class Maindata
 
 };
 template<class T> class relation
+
 {
     public:
-        void insert();
+        bool insert(patient* p);
+        bool search(int id);
+        bool remove(int key);
+        T retrieve(int key);
+        bool merge(int blockID_1, int blockID_2);
+        
 
     private:
         list<Block<T>> blocks;
 };
-
 template<class T> class block
 {
     public:
