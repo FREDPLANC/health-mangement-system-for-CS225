@@ -13,7 +13,7 @@ class Medical_Status;
 class Registration;
 class Treatment;
 
-class patient;
+class patient_f;
 
 
 class IDdata { //IDdata 存放了独一无二的identity作为主键。
@@ -39,7 +39,7 @@ class Person: public IDdata {
         char name[30];
 	    char contact[11]; //number digit of 11
 	    char address[10]; //the address, not know how to use
-        int profession;
+        int prof;
         int birthday;
         int aging;
         Person(patient_f P){
@@ -47,7 +47,7 @@ class Person: public IDdata {
                 strcpy(this->name,P.name);
                 strcpy(this->contact,P.contact);
                 strcpy(this->address,P.address);
-                this->profession = P.prof;
+                this->prof = P.prof;
                 this->birthday = P.birth;
                 this ->aging = P.aging;
         }
@@ -97,7 +97,7 @@ class Registration: public IDdata {
         Registration(patient_f P){
             this->setID(P.id);
             this->priority = P.priority;
-            this->treatment_type = P.treatment_type;
+            this->treatment_type = P.treat_type;
             this->register_time = P.time;
             this->status = P.status;
             this->treat_ddl = P.treat_ddl;
@@ -142,7 +142,7 @@ class patient_f {
 		int time;  // when he is registed
 		int aging;   // the age group he is in
 		int status; // whether he is in waiting , appointed, or else
-		int treatment_type;
+		
 		int treat_ddl;  //the deadline of the treated date
 		int loc;    //the location of the patient
 		
@@ -190,5 +190,6 @@ class patient_f {
 		bool marked;
 		int degree;
 };
+
 
 #endif

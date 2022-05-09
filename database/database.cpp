@@ -4,6 +4,7 @@
 #include <string>
 using namespace std;
 #include "database.h"
+#include "relationType.h"
 
 template <class T> void Maindata<T>::insert(patient_f* p)
 {
@@ -100,7 +101,7 @@ template <class T> bool relation<T>::insert(patient_f* p)
     }
     // if new block is needed
     if (blocks.empty() || all_full) {
-        Block<T> newBlock;
+        block<T> newBlock;
         newBlock.overflowBuffer.push_back(record);
         blocks.push_back(newBlock);
         return true;
@@ -138,7 +139,7 @@ template <class T> void relation<T>::modify(int id,patient_f* p)
     return;
 
 }
-template<class T> bool Relation<T>::remove(int key) {
+template<class T> bool relation<T>::remove(int key) {
     for (typename list< Block<T> >::iterator iter=this->blocks.begin(); iter != this->blocks.end(); ++iter) {
         vector<T>& A = (iter->full()) ? iter->array : iter->overflowBuffer;
         for (int i=0;i<(int)A.size();i++)

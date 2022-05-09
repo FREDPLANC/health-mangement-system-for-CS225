@@ -1,9 +1,17 @@
+#ifndef DATABASE_H
+#define DATABASE_H
+
 #include <list>
 #include <algorithm>
 #include <cstdlib>
 #include <string>
-#include "database.h"
+#include <vector>
+#include "relationType.h"
 using namespace std;
+
+template<class T> class relation;
+template<class T> class block;
+
 template <class T> class Maindata
 {
     public:
@@ -17,7 +25,7 @@ template <class T> class Maindata
     void modifytreatment(int id,patient_f* p);
     void remove(patient_f* p);
     void build();
-    void add_patient(patient_f p);
+    bool add_patient(patient_f* p);
     centerheap<T>* center1;
     centerheap<T>* center2;
     centerheap<T>* center3;
@@ -41,20 +49,32 @@ template<class T> class relation
         void modify(int id,patient_f* p);
     
     private:
-        list<Block<T>> blocks;
+        list<block<T>> blocks;
 };
 
 template<class T> class block
 {
     public:
-        std::vector<T> array;
-        std::vector<T> overflowBuffer;
+       static const int MAX_LENGTH = 5
+        block() {
+            this->array.clear();
+            this->overflowBuffer.clear();
+            
+        }
+        bool full() {
+            return ((int)array.size() == MAX_LENGTH || (int)overflowBuffer.size() == MAX_LENGTH);
+        }
+        int size() {
+            if ((int)array.size() != 0) return (int)array.size();
+            else return (int)overflowBuffer.size();
+        }
+        void Sort();
+
+    private:
+        vector<T> array;
+        vector<T> overflowBuffer;
         int index;
 
 
-    private:
-        
-
-
 };
-
+#endif
