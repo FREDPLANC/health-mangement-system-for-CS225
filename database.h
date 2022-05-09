@@ -13,7 +13,7 @@ template <class T> class Maindata
     void modifystatus(int id,patient_f* p);
     void modifyregistration(int id,patient_f* p);
     void modifytreatment(int id,patient_f* p);
-
+    void remove(patient_f* p);
 
     private:
     relation<Person> person;
