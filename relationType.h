@@ -142,7 +142,7 @@ class patient_f {
 		int time;  // when he is registed
 		int aging;   // the age group he is in
 		int status; // whether he is in waiting , appointed, or else
-		int treat_type;
+		int treatment_type;
 		int treat_ddl;  //the deadline of the treated date
 		int loc;    //the location of the patient
 		
