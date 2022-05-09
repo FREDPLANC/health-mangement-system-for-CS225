@@ -97,7 +97,7 @@ class Registration: public IDdata {
         Registration(patient_f P){
             this->setID(P.id);
             this->priority = P.priority;
-            this->treatment_type = P.treat_type;
+            this->treatment_type = P.treatment_type;
             this->register_time = P.time;
             this->status = P.status;
             this->treat_ddl = P.treat_ddl;
