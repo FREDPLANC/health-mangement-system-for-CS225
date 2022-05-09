@@ -33,13 +33,13 @@ void Maindata<T>::build(){//Add local queues to the central heap
     }
     for (int i=1;i<=l2;i++)
     {   
-        patient p2=Q2.De_queue() ;// same for other queues
+        patient_f p2=Q2.De_queue() ;// same for other queues
         insert(p2);
         add_patient(p2);
     }
     for (int i=1;i<=l3;i++)
     {
-        patient p3=Q3.De_queue() ;
+        patient_f p3=Q3.De_queue() ;
         insert(p2);
         add_patient(p3);
     }
