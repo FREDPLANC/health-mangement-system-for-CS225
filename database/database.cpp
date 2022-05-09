@@ -59,6 +59,25 @@ template <class T> void Maindata<T>::remove(patient_f* p)
     treatment.remove(p);
     return;
 }
+template <class T> bool Maindata<T>::add_patient(patient_f* p)
+{
+    switch (p->treatment_type)
+    {
+    case 0/* constant-expression */:
+        center1->add_patient(p);
+        break;
+    case 1
+        center2->add_patient(p);
+        break;
+
+    case 2
+        center3->add_patient(p);
+        break;
+    default:
+        cout<<"wrong treatment type!"<<endl; 
+        break;
+    }
+}
 
 
 //relation 的类成员函数
@@ -119,8 +138,3 @@ template <class T> void relation<T>::modify(int id,patient_f* p)
     return;
 
 }
-
-
-    
-
-
