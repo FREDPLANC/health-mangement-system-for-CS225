@@ -2,10 +2,12 @@
 #include <algorithm>
 #include <cstdlib>
 #include <string>
+#include "database.h"
 using namespace std;
 template <class T> class Maindata
 {
     public:
+    Maindata();
     void insert(patient_f* p);
     bool search(int id);
     void modify(int id,patient_f* p);
@@ -14,6 +16,11 @@ template <class T> class Maindata
     void modifyregistration(int id,patient_f* p);
     void modifytreatment(int id,patient_f* p);
     void remove(patient_f* p);
+    void build();
+    void add_patient(patient_f p);
+    centerheap<T>* center1;
+    centerheap<T>* center2;
+    centerheap<T>* center3;
 
     private:
     relation<Person> person;
