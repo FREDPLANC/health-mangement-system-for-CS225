@@ -31,8 +31,8 @@ template<class T> class relation
         bool remove(int key);
         T retrieve(int key);
         bool merge(int blockID_1, int blockID_2);
-        int 
-
+        void modify(int id,patient_f* p);
+    
     private:
         list<Block<T>> blocks;
 };
@@ -51,41 +51,3 @@ template<class T> class block
 
 };
 
-class ID
-{
-    public:
-        int id;
-        void getid();
-        void setid();
-
-
-}
-;
-class Person: public ID
-{
-    public:
-
-    private:
-
-};
-class Medical_Status : public ID
-{
-    public:
-
-    private:
-
-    
-};
-class Registration :public ID
-{
-    public:
-
-    private:
-    
-};
-class Treatment :public ID
-{
-    public:
-
-    private:
-};
