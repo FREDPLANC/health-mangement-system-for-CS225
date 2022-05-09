@@ -146,12 +146,26 @@ localQueue<patient_f*>  build_queue (int i){
                         pat->status=atoi(subArray[i].c_str());
                         
                         //cout << pat->status<<endl;
-                        item = -2;
                         break;
                     case 11:
                         pat->treatment_type=atoi(subArray[i].c_str());
-                        
                         //cout << pat->status<<endl;
+                        switch(pat->treatment_type){
+                            case 0:
+                                if(pat->risk == 0 || 1){
+                                    pat->key = pat->prof * 100000 + pat->aging * 10000 + pat->time;
+                                }
+                                else{
+                                    pat->key = pat->prof * 100000 + pat->aging * 10000 + pat->time + pat->risk *1000000;
+                                }
+                                break;
+                            case 1:
+                                pat->key = 10-(pat->aging);
+                                break;
+                            case 2:
+                                pat->key = pat->time;
+                                break;
+                        }
                         item = -2;
                         break;             
             }
