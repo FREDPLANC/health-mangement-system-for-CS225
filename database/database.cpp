@@ -138,3 +138,23 @@ template <class T> void relation<T>::modify(int id,patient_f* p)
     return;
 
 }
+template<class T> bool Relation<T>::remove(int key) {
+    for (typename list< Block<T> >::iterator iter=this->blocks.begin(); iter != this->blocks.end(); ++iter) {
+        vector<T>& A = (iter->full()) ? iter->array : iter->overflowBuffer;
+        for (int i=0;i<(int)A.size();i++)
+        if (A[i].getRecordID() == key) {
+            bool full = iter->full();
+            // delete this element
+            swap(A[i], A[(int)A.size()-1]);
+            A.pop_back();
+            if (full) { // if after deletion the block is not full, put all elements back into overflowBuffer
+                iter->array.swap(iter->overflowBuffer);
+                iter->array.clear();
+            }
+            if (iter->size() == 0)
+                this->blocks.erase(iter);
+            return true;
+        }
+    }
+    return false;
+}
