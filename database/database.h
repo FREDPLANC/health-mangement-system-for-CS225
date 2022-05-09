@@ -14,8 +14,6 @@ template <class T> class Maindata
     void modifyregistration(int id,patient_f* p);
     void modifytreatment(int id,patient_f* p);
     void remove(patient_f* p);
-    void build();
-    centerheap<T>* center;
 
     private:
     relation<Person> person;
