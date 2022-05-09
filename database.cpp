@@ -51,6 +51,15 @@ template <class T> void Maindata<T>::modifytreatment(int id,patient_f* p)
     return;
 
 }
+template <class T> void Maindata<T>::remove(patient_f* p)
+{
+    person.remove(p);
+    medical_status.remove(p);
+    registration.remove(p);
+    treatment.remove(p);
+    return;
+}
+
 
 //relation 的类成员函数
 
