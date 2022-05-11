@@ -7,6 +7,12 @@
 #include <string>
 #include <vector>
 #include "relationType.h"
+#include "../b_tree/BPlustree.h"
+#include"../b_tree/BPlus_node.h"
+#include"../b_tree/BPlus_node.cpp"
+#include "../b_tree/BPlustree.cpp"
+
+
 using namespace std;
 
 template<class T> class relation;
@@ -15,7 +21,17 @@ template<class T> class block;
 template <class T> class Maindata
 {
     public:
-    Maindata();
+    Maindata(){
+        center1 = new centerheap();
+        center2 = new centerheap();
+        center3 = new centerheap();
+        relation<Person> person;
+        relation<Medical_Status> medical_status;
+        relation<Registration> registration;
+        relation<Treatment> treatment;
+        CBPlusTree mainBP_Tree;
+
+    };
     void insert(patient_f* p);
     bool search(int id);
     void modify(int id,patient_f* p);
@@ -23,17 +39,17 @@ template <class T> class Maindata
     void modifystatus(int id,patient_f* p);
     void modifyregistration(int id,patient_f* p);
     void modifytreatment(int id,patient_f* p);
-    T retrieveperson(id);
-    T retrievestatus(id);
-    T retrieveregistration(id);
-    T retrievetreatment(id);
+    T retrieveperson(int id);
+    T retrievestatus(int id);
+    T retrieveregistration(int id);
+    T retrievetreatment(int id);
     void remove(patient_f* p);
     void build();
     bool add_patient(patient_f* p);
     centerheap<T>* center1;
     centerheap<T>* center2;
     centerheap<T>* center3;
-
+    CBPlusTree mainBP_Tree;
     private:
     relation<Person> person;
     relation<Medical_Status> medical_status;
@@ -45,6 +61,7 @@ template<class T> class relation
 
 {
     public:
+        relation();
         bool insert(patient_f* p);
         bool search(int id);
         bool remove(int key);
@@ -73,7 +90,9 @@ template<class T> class block
             else return (int)overflowBuffer.size();
         }
         void Sort();
-
+        int getsize(){
+            return array.size() + overflowBuffer.size();
+        }
     private:
         vector<T> array;
         vector<T> overflowBuffer;

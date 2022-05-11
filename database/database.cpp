@@ -101,25 +101,25 @@ template <class T> T Maindata<T>::retrievetreatment(int id)
 
 
 
-//relation 的类成员函数
+//relation 's member function
 
 template <class T> bool relation<T>::insert(patient_f* p)
 {
     
     bool all_full = true;
     T record=new T(patient_f* p;);
-    // iterate through the list
+    // 遍历relation中的所有block
     for (typename list< Block<T> >::iterator iter=this->blocks.begin(); iter != this->blocks.end(); ++iter)
     {
-        if (!iter->full()) { // if this block is not full, insert into it
+        if (!iter->full()) { //若当前block未满, 放入overflowblock
         iter->overflowBuffer.push_back(record);
-        // if after insertion the block is full, sort it.
+        //若插入后满, sort
         if (iter->full()) iter->Sort();
         all_full = false;
         return true;
         }
     }
-    // if new block is needed
+    // 若当前relation为空或已满
     if (blocks.empty() || all_full) {
         block<T> newBlock;
         newBlock.overflowBuffer.push_back(record);
