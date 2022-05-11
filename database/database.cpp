@@ -79,6 +79,26 @@ template <class T> bool Maindata<T>::add_patient(patient_f* p)
         break;
     }
 }
+template <class T> T Maindata<T>::retriveperson(id)
+{
+    return person.retrieve(id);
+}
+template <class T> T Maindata<T>::retrivestatus(id)
+{
+    return medical_status.retrieve(id);
+}
+template <class T> T Maindata<T>::retrivereregistration(id)
+{
+    return registration.retrieve(id);
+}
+template <class T> T Maindata<T>::retriveretreatment(id)
+{
+    return treatment.retrieve(id);
+}
+
+
+
+
 
 
 //relation 的类成员函数
