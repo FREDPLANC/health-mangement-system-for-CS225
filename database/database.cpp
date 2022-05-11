@@ -79,19 +79,19 @@ template <class T> bool Maindata<T>::add_patient(patient_f* p)
         break;
     }
 }
-template <class T> T Maindata<T>::retriveperson(id)
+template <class T> T Maindata<T>::retrieveperson(int id)
 {
     return person.retrieve(id);
 }
-template <class T> T Maindata<T>::retrivestatus(id)
+template <class T> T Maindata<T>::retrievestatus(int id)
 {
     return medical_status.retrieve(id);
 }
-template <class T> T Maindata<T>::retrivereregistration(id)
+template <class T> T Maindata<T>::retrieveregistration(int id)
 {
     return registration.retrieve(id);
 }
-template <class T> T Maindata<T>::retriveretreatment(id)
+template <class T> T Maindata<T>::retrievetreatment(int id)
 {
     return treatment.retrieve(id);
 }
