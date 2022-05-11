@@ -526,3 +526,67 @@ public:
 private:
 	BTnode<T>* root;//根节点
 };
+
+
+
+class op
+{
+	int time;
+	int ID;
+	bool operator<(op op1);
+	bool operator<=(op op1);
+	bool operator>(op op1);
+	bool operator>=(op op1);
+	bool operator==(op op1);
+};
+
+bool op::operator<(op op1)
+{
+	op op1;
+	op op2;
+	if (op1.time<op2.time)
+	{
+		return true;
+	}
+	else false;
+}
+bool op::operator<=(op op1)
+{
+	op op1;
+	op op2;
+	if (op1.time<=op2.time)
+	{
+		return true;
+	}
+	else false;
+}
+bool op::operator>(op op1)
+{
+	op op1;
+	op op2;
+	if (op1.time>op2.time)
+	{
+		return true;
+	}
+	else false;
+}
+bool op::operator>=(op op1)
+{
+	op op1;
+	op op2;
+	if (op1.time>=op2.time)
+	{
+		return true;
+	}
+	else false;
+}
+bool op::operator==(op op1)
+{
+	op op1;
+	op op2;
+	if (op1.time==op2.time)
+	{
+		return true;
+	}
+	else false;
+}
