@@ -23,6 +23,10 @@ template <class T> class Maindata
     void modifystatus(int id,patient_f* p);
     void modifyregistration(int id,patient_f* p);
     void modifytreatment(int id,patient_f* p);
+    T removeperson(id);
+    T removestatus(id);
+    T removeregistration(id);
+    T removetreatment(id);
     void remove(patient_f* p);
     void build();
     bool add_patient(patient_f* p);
