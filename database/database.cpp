@@ -6,13 +6,20 @@ using namespace std;
 #include "database.h"
 #include "relationType.h"
 
-template <class T> void Maindata<T>::insert(patient_f* p)
-{
-    person.insert(p);
-    medical_status.insert(p);
-    registration.insert(p);
-    treatment.insert(p);
-    return;
+extern int data_number;
+extern int Global_block_count;
+
+template <class T> int Maindata<T>::insert(patient_f* p)
+{   
+    int a=-1, b =-1, c = -1, d = -1;
+    a = person.insert(p);
+    b = medical_status.insert(p);
+    c = registration.insert(p);
+    d = treatment.insert(p);
+    if(a== b==c == d  && a!= -1)
+    return a ;
+    else
+    return -1;
 }
 template <class T> bool Maindata<T>::search(int id)
 {
@@ -103,28 +110,35 @@ template <class T> T Maindata<T>::retrievetreatment(int id)
 
 //relation 's member function
 
-template <class T> bool relation<T>::insert(patient_f* p)
+template <class T> int relation<T>::insert(patient_f* p)// 永远先插入未满的空桶, 返回当前插入的是第几个位置(从1开始)
 {
     
     bool all_full = true;
-    T record=new T(patient_f* p;);
+    T temp=new T(patient_f* p;);
+    extern int Global_Block_count;
+    int block_count = 0;
     // 遍历relation中的所有block
-    for (typename list< Block<T> >::iterator iter=this->blocks.begin(); iter != this->blocks.end(); ++iter)
+    typename list< Block<T> >::iterator iterator=this->blocks.begin();
+    for ( iterator=this->blocks.begin(); iterator != this->blocks.end(); ++iterator, ++block_count)
     {
-        if (!iter->full()) { //若当前block未满, 放入overflowblock
-        iter->overflowBuffer.push_back(record);
+        if (!iterator->full()) { //若当前block未满, 放入overflowblock
+        iterator->overflowBlock.push_back(temp);
         //若插入后满, sort
-        if (iter->full()) iter->Sort();
+        if (iterator->full()) iterator->Sort();
         all_full = false;
-        return true;
+        vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
+        int result = Blocker.size() + block_count*MAX_BLOCK_CAPACITY; // result 返回当前插入block 是第几个, 从1开始
+        return result;
         }
     }
     // 若当前relation为空或已满
     if (blocks.empty() || all_full) {
         block<T> newBlock;
-        newBlock.overflowBuffer.push_back(record);
+        newBlock.overflowBlock.push_back(temp);
         blocks.push_back(newBlock);
-        return true;
+        Global_Block_count++;
+        int result = block_count* MAX_BLOCK_CAPACITY +1;
+        return Global_Block_count;
     }
 
     // unreachable
@@ -132,48 +146,65 @@ template <class T> bool relation<T>::insert(patient_f* p)
 }
 template <class T> bool relation<T>::search(int id)
 {
-    T* x = this->retrieve(key);
+    T* x = this->retrieve(id);
     return (x->getid() != -1);
 }
-template <class T> T relation<T>::retrieve(int id)
+
+template <class T> int relation<T> ::indx_to_id(int block_rank)
 {
-    for (typename list< Block<T> >::iterator iter=this->blocks.begin(); iter != this->blocks.end(); ++iter) {
-        vector<T>& A = (iter->full()) ? iter->array : iter->overflowBuffer;
-        for (int i=0;i<(int)A.size();i++)
-        if (A[i].getid() == key)
-        return A[i];
+    int block_row = (block_rank-1) / MAX_BLOCK_CAPACITY; //记录是第几个block
+    int block_column = block_rank - block_row * MAX_BLOCK_CAPACITY; //记录是该block 的第几个元素
+    int i = 0;
+    typename list< Block<T> >::iterator iterator=this->blocks.begin();
+    for (iterator=this->blocks.begin(); iterator != this->blocks.end() && i < block_row; ++iterator)
+    vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
+    return Blocker[block_column -1].getid();
+}
+template <class T> T relation<T>::retrieve(int id)
+{   
+    typename list< Block<T> >::iterator iterator=this->blocks.begin();
+    for (iterator=this->blocks.begin(); iterator != this->blocks.end(); ++iterator) {
+        vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
+        for (int i=0;i<(int)Blocker.size();i++){
+            if (Blocker[i].getid() == id)
+            return Blocker[i];
+        }
     }
-    T x;
-    x.setid(-1);
-    return x;
+    T temp;
+    temp.setid(-1);
+    return temp;
 }
 template <class T> void relation<T>::modify(int id,patient_f* p)
 {
-    T* tmp=retrive(id);
+    T tmp=retrieve(id);
     if (T->getid()==-1)
     {
         return;
     }
-    remove(id);
-    insert(p);
+    tmp.modify(p);
     return;
 
 }
-template<class T> bool relation<T>::remove(int key) {
-    for (typename list< Block<T> >::iterator iter=this->blocks.begin(); iter != this->blocks.end(); ++iter) {
-        vector<T>& A = (iter->full()) ? iter->array : iter->overflowBuffer;
-        for (int i=0;i<(int)A.size();i++)
-        if (A[i].getRecordID() == key) {
-            bool full = iter->full();
-            // delete this element
-            swap(A[i], A[(int)A.size()-1]);
-            A.pop_back();
-            if (full) { // if after deletion the block is not full, put all elements back into overflowBuffer
-                iter->array.swap(iter->overflowBuffer);
-                iter->array.clear();
+template<class T> bool relation<T>::remove(int id) {
+    typename list< Block<T> >::iterator iterator=this->blocks.begin();
+    for (iterator=this->blocks.begin(); iterator != this->blocks.end(); ++iterator) {
+        vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
+        for (int i=0;i<(int)Blocker.size();i++)
+        if (Blocker[i].getID() == id) {
+            bool judge_full = iterator->full();
+            // 删除该元素
+            swap(Blocker[i], Blocker[(int)Blocker.size()-1]);
+            Blocker.pop_back();
+            data_number--;// 记录datanumber的全局变量递减
+            if (judge_full) { //若删除前block是满的, 则在删除后将主block里的元素倒进overflowBlock中
+                iterator->array.swap(iterator->overflowBlock);
+                iterator->array.clear();
             }
-            if (iter->size() == 0)
-                this->blocks.erase(iter);
+            if (iterator->size() == 0){
+                this->blocks.erase(iterator);
+                extern int Global_Block_count;
+                Global_Block_count--;
+                }
             return true;
         }
     }

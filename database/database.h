@@ -12,7 +12,8 @@
 #include"../b_tree/BPlus_node.cpp"
 #include "../b_tree/BPlustree.cpp"
 
-
+int Global_Block_count = 0;
+int data_number = 0;
 using namespace std;
 
 template<class T> class relation;
@@ -32,7 +33,8 @@ template <class T> class Maindata
         CBPlusTree mainBP_Tree;
 
     };
-    void insert(patient_f* p);
+    int insert(patient_f* p); // 成功则返回database ID, 失败则返回-1
+    bool search(int block_rank);
     bool search(int id);
     void modify(int id,patient_f* p);
     void modifyperson(int id,patient_f* p);
@@ -62,41 +64,47 @@ template<class T> class relation
 {
     public:
         relation();
-        bool insert(patient_f* p);
+        int insert(patient_f* p);
         bool search(int id);
-        bool remove(int key);
-        T retrieve(int key);
-        bool merge(int blockID_1, int blockID_2);
+        int indx_to_id(int block_rank); // 若有, 则返回id,若无,则返回-1
+        bool remove(int id);
+        T retrieve(int id);
         void modify(int id,patient_f* p);
     
     private:
         list<block<T>> blocks;
+        static const int MAX_BLOCK_CAPACITY = 5;
 };
 
 template<class T> class block
 {
     public:
-       static const int MAX_LENGTH = 5
+       static const int MAX_LENGTH = 5;
         block() {
             this->array.clear();
-            this->overflowBuffer.clear();
+            this->overflowBlock.clear();
             
         }
         bool full() {
-            return ((int)array.size() == MAX_LENGTH || (int)overflowBuffer.size() == MAX_LENGTH);
+            return ((int)array.size() == MAX_LENGTH || (int)overflowBlock.size() == MAX_LENGTH);
         }
         int size() {
             if ((int)array.size() != 0) return (int)array.size();
-            else return (int)overflowBuffer.size();
+            else return (int)overflowBlock.size();
         }
-        void Sort();
+        void Sort(){
+            //std::sort(this->overflowBuffer.begin(), this->overflowBuffer.end());
+            overflowBuffer.swap(array);
+            overflowBuffer.clear();
+        }
         int getsize(){
-            return array.size() + overflowBuffer.size();
+            return array.size() + overflowBlock.size();
         }
     private:
+        
         vector<T> array;
-        vector<T> overflowBuffer;
-        int index;
+        vector<T> overflowBlock;
+        int Block_number;
 
 
 };

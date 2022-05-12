@@ -42,14 +42,23 @@ class Person: public IDdata {
         int prof;
         int birthday;
         int aging;
-        Person(patient_f P){
-                this->setID(P.id);
-                strcpy(this->name,P.name);
-                strcpy(this->contact,P.contact);
-                strcpy(this->address,P.address);
-                this->prof = P.prof;
-                this->birthday = P.birth;
-                this ->aging = P.aging;
+        Person(patient_f *P){
+                this->setID(P->id);
+                strcpy(this->name,P->name);
+                strcpy(this->contact,P->contact);
+                strcpy(this->address,P->address);
+                this->prof = P->prof;
+                this->birthday = P->birth;
+                this ->aging = P->aging;
+        }
+        void modify(patient_f *P){
+                this->setID(P->id);
+                strcpy(this->name,P->name);
+                strcpy(this->contact,P->contact);
+                strcpy(this->address,P->address);
+                this->prof = P->prof;
+                this->birthday = P->birth;
+                this ->aging = P->aging;
         }
       
         /*void print() {
@@ -73,9 +82,13 @@ class Person: public IDdata {
 class Medical_Status: public IDdata {
     public:
         int risk;
-        Medical_Status(patient_f P){
-            this->setID(P.id);
-            this->risk = P.risk;
+        Medical_Status(patient_f*P){
+            this->setID(P->id);
+            this->risk = P->risk;
+        }
+        void modify(patient_f * P){
+            this->setID(P->id);
+            this->risk = P->risk;
         }
         /*void print() {
             cout.setf(std::ios::left);
@@ -94,15 +107,23 @@ class Registration: public IDdata {
         int waiting_time;
         int treated_loctation;
        // int treated_time;
-        Registration(patient_f P){
-            this->setID(P.id);
-            this->priority = P.priority;
-            this->treatment_type = P.treat_type;
-            this->register_time = P.time;
-            this->status = P.status;
-            this->treat_ddl = P.treat_ddl;
+        Registration(patient_f *P){
+            this->setID(P->id);
+            this->priority = P->priority;
+            this->treatment_type = P->treat_type;
+            this->register_time = P->time;
+            this->status = P->status;
+            this->treat_ddl = P->treat_ddl;
             //this->waiting_time = P.
 
+        }
+        void modify(patient_f *P){
+            this->setID(P->id);
+            this->priority = P->priority;
+            this->treatment_type = P->treat_type;
+            this->register_time = P->time;
+            this->status = P->status;
+            this->treat_ddl = P->treat_ddl;
         }
        /* void print() {
             cout.setf(std::ios::left);
@@ -117,10 +138,15 @@ class Treatment: public IDdata {
     public:
         int treatment_time;
         int treat_hospital;
-        Treatment(patient_f P){
-            this->setID(P.id);
-            this->treatment_time = P.treat_time;
-            this->treat_hospital = P.treat_hospital;
+        Treatment(patient_f *P){
+            this->setID(P->id);
+            this->treatment_time = P->treat_time;
+            this->treat_hospital = P->treat_hospital;
+        }
+        void modify(patient_f *P){
+            this->setID(P->id);
+            this->treatment_time = P->treat_time;
+            this->treat_hospital = P->treat_hospital;
         }
         /*void print() {
             cout.setf(std::ios::left);
