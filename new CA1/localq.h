@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <relationType.h>
-#include <database.h>
+#include <../database/database.h>
 using namespace std;
 
 #ifndef localq_h
@@ -117,7 +117,7 @@ int len_N=0;   // the number of patient
 hospital* H[3]; //three hospital
 int content_total = 0;
 int capacity_total;
-localQueue<patient_f*> build_queue (int i);
+localQueue<patient_f*> build_queue (BTree btree_registered);
 
 #endif
 

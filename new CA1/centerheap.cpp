@@ -540,7 +540,7 @@ centerNode<T>* centerHeap<T>::search_id(centerNode<T> *root, int id)
     return p;
 }
 template <class T>
-void centerHeap<T>::pop_patient_wrtddl(centerNode<T> *root, int ddl) //返回指向当天有ddl的病人的指针
+void centerHeap<T>::pop_patient_wrtddl(centerNode<T> *root, int ddl, BTree btree_registered, BTree btree_appointment,int date, Maindata<int> center) //返回指向当天有ddl的病人的指针
 {
     centerNode<T> *t = root;    // temporary node
     patient_f temper =  center.retrievepatient_f(t->id);
@@ -552,11 +552,16 @@ void centerHeap<T>::pop_patient_wrtddl(centerNode<T> *root, int ddl) //返回指
     do
     {
         if ( temp->treat_ddl == ddl){
-            temp->treat_time = ddl - 5;
+            temp->treat_time = ddl + 10;
             temp->treat_hospital = check_nearest(temp->loc);
+            op temper = op(temp->time,temp->id);
+            btree_registered.BTree_delete(temper);
+            op temper_appoint = op(date,temp->id);
+            btree_appointment.BTree_insert(temper_appoint);
+            center.modify(min->id,temp);
             remove(t);
         }else{
-            pop_patient_wrtddl(t->child, ddl); 
+            pop_patient_wrtddl(t->child, ddl,date,center); 
         }
         t = t->right;
     } while (t != root);
