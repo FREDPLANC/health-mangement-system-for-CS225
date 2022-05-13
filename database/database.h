@@ -11,6 +11,7 @@
 #include"../b_tree/BPlus_node.h"
 #include"../b_tree/BPlus_node.cpp"
 #include "../b_tree/BPlustree.cpp"
+#include "../b_tree/btree.h"
 
 int Global_Block_count = 0;
 int data_number = 0;
@@ -54,6 +55,13 @@ template <class T> class Maindata
     centerheap<T>* center2;
     centerheap<T>* center3;
     CBPlusTree mainBP_Tree;
+    void report_treated();
+    void report_registered();
+    void report_appointment();
+    BTree btree_treated;
+    BTree btree_appointment;
+    BTree btree_registered;
+
     private:
     relation<Person> person;
     relation<Medical_Status> medical_status;
