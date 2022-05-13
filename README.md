@@ -11,7 +11,7 @@ database文件夹： 包括数据库的基本构建操作
   0：之前定义的basic rule
   1：年长先治
   2：先到先治
-
+treated  appointment  registered
 有关内部代码：
   1. 总内存：maindata 内部有四个relation 每个relation的存储方式是由list类型的block实现的，block存的类型包括person,medical_status,registration,treatment四个类型。  
   2. maindata 内部存有一个b树，一个b+树以及三个斐波那契堆，其中，b+树用于根据id索引该病人在数据库的地址(即 block ID)，b树用于根据时间索引id，三个斐波那契堆用于排序。  
