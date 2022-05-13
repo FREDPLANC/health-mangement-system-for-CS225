@@ -26,6 +26,7 @@ Maindata<int> center;
 BTree btree_delaytreated;
 BTree btree_treated;
 BTree btree_appointment;
+BTree btree_registered;
 
 void choice_0(); // the interactive interface of different choice entered by the user
 void choice_1();
