@@ -18,3 +18,4 @@ treated  appointment  registered
   3. 在maindata之外还有一个叫做paitient_f的类，这个类具有存每一个人全部个人信息的功能，用于数据在各个类以及文件输入输出的转换。
   4.  我们建立三个B树，registeration树，treat树，withdraw树。 每个树储存不同status的病人，用于report时分类打印病人信息。我们的B树是通过时间range去索引在此区间内所有病人的ID
   5.  我们的B+树通过输入的ID去返回block ID，然后通过BLOCK ID 和 ID 去database寻找病人的全部信息。用于之后的打印
+b树的使用方法：基础的函数有BTree_insert（），  
