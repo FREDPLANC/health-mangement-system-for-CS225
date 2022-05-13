@@ -14,6 +14,7 @@
 
 int Global_Block_count = 0;
 int data_number = 0;
+int week_counter = 0;
 using namespace std;
 
 template<class T> class relation;
@@ -41,13 +42,14 @@ template <class T> class Maindata
     void modifystatus(int id,patient_f* p);
     void modifyregistration(int id,patient_f* p);
     void modifytreatment(int id,patient_f* p);
-    T retrieveperson(int id);
-    T retrievestatus(int id);
-    T retrieveregistration(int id);
-    T retrievetreatment(int id);
+    T*retrieveperson(int id);
+    T*retrievestatus(int id);
+    T*retrieveregistration(int id);
+    T*retrievetreatment(int id);
+    patient_f retrievepatient_f(int id);
     void remove(patient_f* p);
     void build();
-    bool add_patient(patient_f* p);
+    bool add_patient(patient_f p);
     centerheap<T>* center1;
     centerheap<T>* center2;
     centerheap<T>* center3;
@@ -68,7 +70,7 @@ template<class T> class relation
         bool search(int id);
         int indx_to_id(int block_rank); // 若有, 则返回id,若无,则返回-1
         bool remove(int id);
-        T retrieve(int id);
+        T *retrieve(int id);
         void modify(int id,patient_f* p);
     
     private:

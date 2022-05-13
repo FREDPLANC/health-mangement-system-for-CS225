@@ -67,7 +67,7 @@ template <class T> void Maindata<T>::remove(patient_f* p)
     treatment.remove(p);
     return;
 }
-template <class T> bool Maindata<T>::add_patient(patient_f* p)
+template <class T> bool Maindata<T>::add_patient(patient_f p)
 {
     switch (p->treatment_type)
     {
@@ -86,24 +86,49 @@ template <class T> bool Maindata<T>::add_patient(patient_f* p)
         break;
     }
 }
-template <class T> T Maindata<T>::retrieveperson(int id)
+template <class T> T*Maindata<T>::retrieveperson(int id)
 {
     return person.retrieve(id);
 }
-template <class T> T Maindata<T>::retrievestatus(int id)
+template <class T> T*Maindata<T>::retrievestatus(int id)
 {
     return medical_status.retrieve(id);
 }
-template <class T> T Maindata<T>::retrieveregistration(int id)
+template <class T> T*Maindata<T>::retrieveregistration(int id)
 {
     return registration.retrieve(id);
 }
-template <class T> T Maindata<T>::retrievetreatment(int id)
+template <class T> T*Maindata<T>::retrievetreatment(int id)
 {
     return treatment.retrieve(id);
 }
 
+template <class T> patient_f Maindata<T>::retrievepatient_f(int id){
 
+    patient_f temp;
+    Person *t1 = retrieveperson(id);
+    Medical_Status *t2 = retrievestatus(id);
+    Registration *t3 = retrieveregistration(id);
+    Treatment *t4 = retrievetreatment(id);
+    strcpy(t.name,t1->name);
+    strcpy(t.contact,t1->contact);
+    strcpy(t.address,t1->address);
+    temp.priority = t1->priority;
+    temp.aging = t1->aging;
+    temp.birth = t1->birthday;
+    temp.id = t1->ID;
+    temp.loc = t1->loc;
+    temp.prof = t1->prof;
+    temp.risk = t2->risk;
+    temp.status = t3->status;
+    temp.time = t1->time;
+    temp.treat_ddl = t3->treat_ddl;
+    temp.treat_hospital = t4->treat_hospital;
+    temp.treat_time = t4->treatment_time;
+    temp.treat_type = t3->treatment_type;
+
+
+}
 
 
 
@@ -160,28 +185,28 @@ template <class T> int relation<T> ::indx_to_id(int block_rank)
     vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
     return Blocker[block_column -1].getid();
 }
-template <class T> T relation<T>::retrieve(int id)
+template <class T> T *relation<T>::retrieve(int id)
 {   
     typename list< Block<T> >::iterator iterator=this->blocks.begin();
     for (iterator=this->blocks.begin(); iterator != this->blocks.end(); ++iterator) {
         vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
         for (int i=0;i<(int)Blocker.size();i++){
             if (Blocker[i].getid() == id)
-            return Blocker[i];
+            return &Blocker[i];
         }
     }
     T temp;
     temp.setid(-1);
-    return temp;
+    return &temp;
 }
 template <class T> void relation<T>::modify(int id,patient_f* p)
 {
-    T tmp=retrieve(id);
-    if (T->getid()==-1)
+    T *tmp=retrieve(id);
+    if (tmp->getid()==-1)
     {
         return;
     }
-    tmp.modify(p);
+    tmp->modify(p);
     return;
 
 }

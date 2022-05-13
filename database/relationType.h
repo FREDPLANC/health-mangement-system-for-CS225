@@ -42,7 +42,11 @@ class Person: public IDdata {
         int prof;
         int birthday;
         int aging;
+        int priority;
+        int loc;
+        int time;
         Person(patient_f *P){
+                this->priority;
                 this->setID(P->id);
                 strcpy(this->name,P->name);
                 strcpy(this->contact,P->contact);
@@ -50,6 +54,8 @@ class Person: public IDdata {
                 this->prof = P->prof;
                 this->birthday = P->birth;
                 this ->aging = P->aging;
+                this->loc = P->loc;
+                this->time = P->time;
         }
         void modify(patient_f *P){
                 this->setID(P->id);
@@ -59,6 +65,8 @@ class Person: public IDdata {
                 this->prof = P->prof;
                 this->birthday = P->birth;
                 this ->aging = P->aging;
+                this->loc = P->loc;
+                this->time = P->time;
         }
       
         /*void print() {
@@ -104,8 +112,6 @@ class Registration: public IDdata {
         int register_time;
         int status;
         int treat_ddl;
-        int waiting_time;
-        int treated_loctation;
        // int treated_time;
         Registration(patient_f *P){
             this->setID(P->id);
@@ -177,7 +183,7 @@ class patient_f {
         int treat_hospital;
 		/* Class Functions */
 		patient_f(){
-			int id = -1;
+		int id = -1;
 		char name[30];
 		char contact[11]; //number digit of 11
 		char address[10]; //the address, not know how to use
