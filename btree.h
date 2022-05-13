@@ -189,6 +189,7 @@ public:
     return false;
    }
    
+   
     /*
     函数名:BTree_find
     函数作用:查找是否有相同元素在数中
@@ -204,15 +205,19 @@ public:
    	   else//当前节点不为空
    	   {
    	   	 int i;
+		 int mark=0;
          //在比它小和比它大的中间子节点中寻找相等的
    	   	 for (i = 0; i < node->keyNum ;i++)
    	   	 {
    	   	 	  if (value <= node->keyvalue[i])
             {
-               break; 
+               mark=1;
+			   break; 
             }
    	   	 }
- 
+		/*if (mark==0){
+			i++;
+		}*/
    	   	 //校验当前的关键字是否等于查找的关键字
          if (i < node->keyNum && value != node->keyvalue[i])//i是下标最大值keyNum-1 != 已经被重载
          {
@@ -319,10 +324,10 @@ public:
     */
    bool BTree_delete(T value)
    {
-      /*if (!contain(value))
+      if (!contain(value))
       {
           return false;
-      }*/
+      }
       if (root->keyNum == 1)
       {
              if (root->isleaf)
@@ -345,6 +350,7 @@ public:
              }
       }
       BTree_deletebalance(root,value);
+	  return true;
    }
      /*
     函数名:MergeBlock
@@ -429,7 +435,7 @@ public:
  
      }
      //如果当前i的关键字等于value
-     if (i < node->keyNum && value == node->keyvalue[i])
+     if (i < node->keyNum && value != node->keyvalue[i])//有重载运算符
      {
       //判断当前节点是否是叶子节点,如果是的话直接删除,下面的情况保证了如果value在叶子节点的话,叶子节点keyNum一定是>=child_min
         if (node->isleaf)
@@ -641,13 +647,21 @@ bool op::operator<(op op1)
 	{
 		return true;
 	}
+	else if(time==op1.time&&ID<op1.ID)
+	{
+		return true;
+	}
 	return false;
 }
 bool op::operator<=(op op1)
 {
 	//op op1;
 	//op op2;
-	if (time<=op1.time)
+	if (time<op1.time)
+	{
+		return true;
+	}
+	else if(time==op1.time&&ID<=op1.ID)
 	{
 		return true;
 	}
@@ -661,13 +675,21 @@ bool op::operator>(op op1)
 	{
 		return true;
 	}
+	else if(time==op1.time&&ID>op1.ID)
+	{
+		return true;
+	}
 	return false;
 }
 bool op::operator>=(op op1)
 {
 	//op op1;
 	//op op2;
-	if (time>=op1.time)
+	if (time>op1.time)
+	{
+		return true;
+	}
+	else if(time==op1.time&&ID>=op1.ID)
 	{
 		return true;
 	}
@@ -681,6 +703,7 @@ bool op::operator==(op op1)
 	{
 		return true;
 	}
+	
 	return false;
 }
 bool op::operator!=(op op1)
