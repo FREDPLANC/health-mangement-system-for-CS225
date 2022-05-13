@@ -23,6 +23,10 @@ int date_treat;
 int week_counter = 1;
 int month_counter = 1;
 Maindata<int> center;
+BTree btree_delaytreated;
+BTree btree_treated;
+BTree btree_appointment;
+
 void choice_0(); // the interactive interface of different choice entered by the user
 void choice_1();
 void choice_2();

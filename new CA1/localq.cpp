@@ -60,7 +60,6 @@ localQueue<patient_f*>  build_queue (int i){
     int omitline = 0; // the line to be neglected
     ifstream infile(filename);
     
-
     while(infile.good()){
         
         //.csv files use commas (,) as delimiters
@@ -170,7 +169,8 @@ localQueue<patient_f*>  build_queue (int i){
 
             }
             palist.En_queue(pat);
-            
+            op tmp = op(date_treat,pat->id);
+            btree_registered.insert(tmp);
             cout << endl;
         }
         /*
