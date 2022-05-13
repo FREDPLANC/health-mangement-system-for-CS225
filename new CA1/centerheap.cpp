@@ -543,8 +543,8 @@ template <class T>
 void centerHeap<T>::pop_patient_wrtddl(centerNode<T> *root, int ddl) //返回指向当天有ddl的病人的指针
 {
     centerNode<T> *t = root;    // temporary node
-    Patient_f *temp =  center.retrieve(t->id);
-
+    Patient_f temper =  center.retrievepatient_f(t->id);
+    Patient_f *temp = &temper;
 
     if (root==NULL)
         return;

@@ -23,8 +23,8 @@ template<class T> void  centerHeap<T>::appointment_process(int date, BTree btree
     int rest_capacity = capacity_total - content_total;
    
        for (int i = 0; i < rest_capacity && min != NULL;i++){ // To prevent exceeding the daily capacity of all hospitals combined on that day
-        Patient_f *temp =  center.retrieve(min->id);
-        
+        Patient_f temper =  center.retrievepatient_f(min->id);
+        Patient_f* temp = &temper;
         if((temp->risk == 2)||(withdraw_list[temp->id] == 1)){
             if(temp->risk == 2){
                 if(temp->treat_ddl < 0){
@@ -68,7 +68,8 @@ template<class T> void  centerHeap<T>::appointment_process(int date, BTree btree
             */
             
         }
-        Patient_f *tmp =  center.retrieve(min->id);
+        Patient_f tmper =  center.retrievepatient_f(min->id);
+        Patient_f *tmp = &tmper;
         tmp->treated_time = date + 5;
         op tmp_op = op(date,tmp->id);
         btree_appointment.insert(tmp_op);
