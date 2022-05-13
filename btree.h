@@ -319,10 +319,10 @@ public:
     */
    bool BTree_delete(T value)
    {
-      if (!contain(value))
+      /*if (!contain(value))
       {
           return false;
-      }
+      }*/
       if (root->keyNum == 1)
       {
              if (root->isleaf)
