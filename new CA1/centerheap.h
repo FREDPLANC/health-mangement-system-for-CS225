@@ -144,12 +144,12 @@ template<class T> class centerHeap
         void remove(T key);   // Delete the node whose key is key
         void destroy();  // destroy
         centerNode<T>* search_id(centerNode<T> *root, int id);
-        void appointment_process(int date );//process the appoint
-        void mediumRisk_process(int date); //medium risk process;  
-        void treatment_process(int date );  // process the treatment
+        void appointment_process(int date, BTree btree_delaytreated, BTree btree_treated, BTree btree_appointment, Maindata<int> center );//process the appoint
+        void mediumRisk_process(int date, BTree btree_delaytreated, BTree btree_treated, BTree btree_appointment, Maindata<int> center); //medium risk process;  
+        void treatment_process(int date, BTree btree_delaytreated, BTree btree_treated, BTree btree_appointment, Maindata<int> center );  // process the treatment
         void pop_patient_wrtddl(centerNode<T> *root, int ddl);
         void withdraw(int id);
-        int check_nearest(centerNode<T> *node);
+        int check_nearest(int loc_pat);
         //void build(); // Read the hospital general queue
         void add_patient(patient_f p);
         void insert(patient_f p);

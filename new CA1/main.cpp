@@ -10,8 +10,8 @@
 #include "process.cpp"
 #include "report.cpp"
 #include "build.cpp"
-#include "../CA2_group/SHIT_ASS-main/database/database.h"
-#include "../CA2_group/SHIT_ASS-main/database/relationType.h"
+#include "../database/database.h"
+#include "../database/relationType.h"
 using namespace std;
 
 int months[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};// the exact days of every month
@@ -36,15 +36,15 @@ void half_day_process(){ // when time flows a day, it needs the following steps
     extern int date_treat;
     date_treat = month*1000 + day*10 + am; // the converted time
     center.build(); // insert the csv daily data;
-    center.center1.mediumRisk_process(date_treat);
-    center.center1.treatment_process(date_treat); // treat queue generated
-    center.center1.appointment_process(date_treat);  // appointment queue generated
-    center.center2.mediumRisk_process(date_treat);
-    center.center2.treatment_process(date_treat); // treat queue generated
-    center.center2.appointment_process(date_treat);  // appointment queue generated
-    center.center3.mediumRisk_process(date_treat);
-    center.center3.treatment_process(date_treat); // treat queue generated
-    center.center3.appointment_process(date_treat);  // appointment queue generated
+    center.center1.mediumRisk_process(date_treat, btree_delaytreated, btree_treated, btree_appointment, center);
+    center.center1.treatment_process(date_treat, btree_delaytreated, btree_treated, btree_appointment, center); // treat queue generated
+    center.center1.appointment_process(date_treat, btree_delaytreated, btree_treated, btree_appointment, center);  // appointment queue generated
+    center.center2.mediumRisk_process(date_treat, btree_delaytreated, btree_treated, btree_appointment, center);
+    center.center2.treatment_process(date_treat, btree_delaytreated, btree_treated, btree_appointment, center); // treat queue generated
+    center.center2.appointment_process(date_treat, btree_delaytreated, btree_treated, btree_appointment, center);  // appointment queue generated
+    center.center3.mediumRisk_process(date_treat, btree_delaytreated, btree_treated, btree_appointment, center);
+    center.center3.treatment_process(date_treat, btree_delaytreated, btree_treated, btree_appointment, center); // treat queue generated
+    center.center3.appointment_process(date_treat, btree_delaytreated, btree_treated, btree_appointment, center); // appointment queue generated
 }
 
 

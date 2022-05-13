@@ -23,14 +23,12 @@ void daily_hosp_setZero(void){
 }
 
 template <class T>
-int centerHeap<T>::check_nearest(centerNode<T> *node)
+int centerHeap<T>::check_nearest(int loc_pat)
 {   
     
-
     int result = 0;
     int best = 100;
     int choice = 0;
-    int loc_pat = node->loc;
     for(int i = 0; i < 3; i++){
         if(H[i]->content >= H[i]->capacity){
             continue;
