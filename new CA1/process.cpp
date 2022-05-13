@@ -7,6 +7,7 @@
 #include "localq.h"
 #include "../database/database.h"
 #include "../database/relationType.h"
+#include "../btree.h"
 #include "centerheap.h"
 using namespace std;
 #include <vector>
