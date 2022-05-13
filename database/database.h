@@ -43,10 +43,10 @@ template <class T> class Maindata
     void modifystatus(int id,patient_f* p);
     void modifyregistration(int id,patient_f* p);
     void modifytreatment(int id,patient_f* p);
-    T*retrieveperson(int id);
-    T*retrievestatus(int id);
-    T*retrieveregistration(int id);
-    T*retrievetreatment(int id);
+    Person*retrieveperson(int id);
+    Medical_Status*retrievestatus(int id);
+    Registration*retrieveregistration(int id);
+    Treatment*retrievetreatment(int id);
     patient_f retrievepatient_f(int id);
     void remove(patient_f* p);
     void build();
@@ -69,6 +69,9 @@ template <class T> class Maindata
     relation<Treatment> treatment;
 
 };
+// 1. 输入id,通过b+树,得到block_index,
+// 2. 对每个relation,调用indx_to_id(), 输入block_index,返回id
+// 3. 其余继续调用relation和Maindata的函数
 template<class T> class relation
 
 {
