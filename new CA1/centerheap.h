@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "localq.h"
+#include "../database/database.h"
+#include "../database/relationType.h"
 using namespace std;
 #ifndef  centerheap_h
 #define centerheap_h
@@ -113,8 +115,9 @@ template<class T> class centerNode
 
 template<class T> class centerHeap
 {     
-      
+    
     public:
+        friend class patient_f;
         int keyNum;         // The total number of current nodes in the heap (not just the number of keys, which may be duplicated)
         int total_appointment_num;       // How many appointments have been made since the beginning
         int maxDegree;      // the biggest degree
