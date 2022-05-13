@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+#include <vector>
 static const int m = 3;  //定义最小度为3
 static const int key_max = 2*m-1;//关键字最大个数
 static const int key_min = m - 1;//关键字最小个数
@@ -28,7 +29,7 @@ public:
 		}
 		for (i = 0;i < key_max;i++)//关键字数组初始化
 		{
-			keyvalue[i] = '\0';
+			keyvalue[i] =-1;
 		}
 	}
  private:
@@ -181,8 +182,10 @@ public:
     */
    bool contain(T value)
    {
-        if (BTree_find(root,value) != NULL)
-   	  return true;
+        if (BTree_find(root,value) != NULL){
+			return true;
+		}
+   	  
     return false;
    }
    
@@ -211,7 +214,7 @@ public:
    	   	 }
  
    	   	 //校验当前的关键字是否等于查找的关键字
-         if (i < node->keyNum && value == node->keyvalue[i])//i是下标最大值keyNum-1
+         if (i < node->keyNum && value != node->keyvalue[i])//i是下标最大值keyNum-1 != 已经被重载
          {
             return node;
          }
@@ -230,6 +233,42 @@ public:
          }
    	   }
    }
+   void find(T value,vector<T> &vec)
+   {
+	   B_find(root,value,vec);
+   }
+   void B_find(BTnode<T>* node,T value,vector<T> &vec)
+   {
+   	   if (node == NULL)//当前节点为空的时候
+   	   {
+   	   	  return ;
+   	   }
+   	   else//当前节点不为空
+   	   {
+   	   	 int i;
+         //在比它小和比它大的中间子节点中寻找相等的
+   	   	 for (i = 0; i < node->keyNum ;i++)
+   	   	 {
+               if (i < node->keyNum && value == node->keyvalue[i])//i是下标最大值keyNum-1
+				{
+					vec.push_back(node->keyvalue[i]);
+				} 
+				if (!(node->isleaf))//如果不是叶子节点则在下面的子节点中寻找
+				{
+				for(int j=i;j<=node->keyNum;j++){
+					B_find(node->pchild[j],value,vec);//这里的return别忘了
+				}
+				
+				}
+   	   	 }
+ 
+   	   	 
+         
+   	   }
+   }
+
+
+  
   
     /*
     函数名:printpoint
@@ -254,7 +293,7 @@ public:
    	   	   {
    	   	   	 cout<<"-";
    	   	   }
-   	   	   cout<<"|"<<node->keyvalue[i]<<"|"<<endl;
+   	   	   cout<<"|"<<node->keyvalue[i].ID<<","<<node->keyvalue[i].time<<"|"<<endl;//1111111111111234
    	    }
    	    if (!node->isleaf)//子节点数比关键字数多一个
    	   	{
@@ -527,10 +566,51 @@ private:
 	BTnode<T>* root;//根节点
 };
 
+/*
+//新加入的代码
+template<class T> class nodes
+{
+	nodes(BTnode<T>* s)
+	{
+		content=s;
+	}
+	BTnode<T>* content;
+	nodes<T>* next;
+	nodes<T>* prev;
+	
+};
+template<class T> class nodelist
+{
+	nodelist()
+	{
+		dummy=new node<T>();
+		dummy->next=dummy;
+		dummy->prev=dummy;
+		now=dummy;
+	}
+	nodes<T>* now;
+	nodes<T>* dummy;
+	void insert(node<T>* node)
+	{
+		node->next=now->next;
+		node->next->prev=node;
+		now->next=node;
+		node->prev=now;
+		
+		now=node;
+	}
+	void concat(nodelist<T>* new)
+	{
 
+	}
+};
+*/
 
 class op
 {
+	public:
+	op();
+	op(int t,int i);
 	int time;
 	int ID;
 	bool operator<(op op1);
@@ -538,55 +618,86 @@ class op
 	bool operator>(op op1);
 	bool operator>=(op op1);
 	bool operator==(op op1);
+	bool operator!=(op op1);
+	void operator=(int i);
 };
-
+op::op()
+{
+	time=-1;
+	ID=-1;
+	
+}
+op::op(int t,int i)
+{
+	time=t;
+	ID=i;
+	
+}
 bool op::operator<(op op1)
 {
-	op op1;
-	op op2;
-	if (op1.time<op2.time)
+	//op op1;
+	//op op2;
+	if (time<op1.time)
 	{
 		return true;
 	}
-	else false;
+	return false;
 }
 bool op::operator<=(op op1)
 {
-	op op1;
-	op op2;
-	if (op1.time<=op2.time)
+	//op op1;
+	//op op2;
+	if (time<=op1.time)
 	{
 		return true;
 	}
-	else false;
+	return false;
 }
 bool op::operator>(op op1)
 {
-	op op1;
-	op op2;
-	if (op1.time>op2.time)
+	//op op1;
+	//op op2;
+	if (time>op1.time)
 	{
 		return true;
 	}
-	else false;
+	return false;
 }
 bool op::operator>=(op op1)
 {
-	op op1;
-	op op2;
-	if (op1.time>=op2.time)
+	//op op1;
+	//op op2;
+	if (time>=op1.time)
 	{
 		return true;
 	}
-	else false;
+	return false;
 }
 bool op::operator==(op op1)
 {
-	op op1;
-	op op2;
-	if (op1.time==op2.time)
+	//op op1;
+	//op op2;
+	if (time==op1.time)
 	{
 		return true;
 	}
-	else false;
+	return false;
+}
+bool op::operator!=(op op1)
+{
+	//op op1;
+	//op op2;
+	if (time==op1.time&&ID==op1.ID)
+	{
+		return true;
+	}
+	return false;
+}
+void op::operator=(int i)
+{
+	//op op1;
+	//op op2;
+	time=i;
+
+	
 }
