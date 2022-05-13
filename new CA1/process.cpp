@@ -32,7 +32,7 @@ template<class T> void  centerHeap<T>::appointment_process(int date, BTree btree
                 if(temp->treat_ddl < 0){
                     temp->treat_ddl = date + 3000;
                 }
-                temp->treated_time = date + 3010; 
+                temp->treat_time = date + 3010; 
                 //op temp_op = op(temp->treated_time,temp->id);
                 //btree_treated.insert(temp_op);
             }
@@ -40,7 +40,7 @@ template<class T> void  centerHeap<T>::appointment_process(int date, BTree btree
                 if(temp->treat_ddl < 0){
                     temp->treat_ddl = date + 1400;
                 }
-                temp->treated_time = date + 1410; 
+                temp->treat_time = date + 1410; 
                 //op temp_op = op(temp->treated_time,temp->id);
                 //btree_treated.insert(temp_op);
             }
@@ -72,10 +72,10 @@ template<class T> void  centerHeap<T>::appointment_process(int date, BTree btree
         }
         patient_f tmper =  center.retrievepatient_f(min->id);
         patient_f *tmp = &tmper;
-        tmp->treated_time = date + 5;
+        tmp->treat_time = date + 5;
         op tmp_op = op(date,tmp->id);
         btree_appointment.insert(tmp_op);
-        tmp->treated_location = check_nearest(tmp->loc);
+        tmp->treat_hospital = check_nearest(tmp->loc);
         center.modify(min->id,tmp);
         //total_appointment_num++;
         
@@ -93,8 +93,11 @@ template<class T> void centerHeap<T>::mediumRisk_process(int date, BTree btree_d
     vector <op> list;
     btree_delaytreated.find(tmp,list);
     for(int i = 0; i < list.size(); i++){
+        patient_f tmper =  center.retrievepatient_f(list[i].ID);
+        patient_f *tmp = &tmper;
+        tmp->treat_hospital = check_nearest(tmp->loc);
+        center.modify(list[i].id,tmp);
         btree_delaytreated.delete(list[i]);
-        list[i].time += 10;
         btree_appointment.insert(list[i]);
     }
     return;
