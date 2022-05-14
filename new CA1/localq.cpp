@@ -150,17 +150,17 @@ localQueue<patient_f*>  build_queue (BTree btree_registered){
                         switch(pat->treatment_type){
                             case 0:
                                 if(pat->risk == 0 || 1){
-                                    pat->key = pat->prof * 100000 + pat->aging * 10000 + pat->time;
+                                    pat->priority = pat->prof * 100000 + pat->aging * 10000 + pat->time;
                                 }
                                 else{
-                                    pat->key = pat->prof * 100000 + pat->aging * 10000 + pat->time + pat->risk *1000000;
+                                    pat->priority = pat->prof * 100000 + pat->aging * 10000 + pat->time + pat->risk *1000000;
                                 }
                                 break;
                             case 1:
-                                pat->key = 10-(pat->aging);
+                                pat->priority = 10-(pat->aging);
                                 break;
                             case 2:
-                                pat->key = pat->time;
+                                pat->priority = pat->time;
                                 break;
                         }
                         item = -2;
