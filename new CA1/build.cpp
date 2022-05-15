@@ -13,12 +13,13 @@
 using namespace std;
 
 
+
 template <class T>
-void Maindata<T>::build(){//Add local queues to the central heap
+void Maindata<T>::build(BTree<T>* 1_btree_registered,BTree<T>* 2_btree_registered,BTree<T>* 3_btree_registered){//Add local queues to the central heap
     
-    localQueue <patient_f*> Q1 = build_queue(1); //first build the local queue;
-    localQueue<patient_f*> Q2 = build_queue(2);
-    localQueue<patient_f*> Q3 = build_queue(3);
+    localQueue <patient_f*> Q1 = build_queue(&1_btree_registered); //first build the local queue;
+    localQueue<patient_f*> Q2 = build_queue(&2_btree_registered);
+    localQueue<patient_f*> Q3 = build_queue(&3_btree_registered);
     int k=0;
     int l1 = Q1.getlength();
     int l2 = Q2.getlength();

@@ -53,7 +53,7 @@ int centerHeap<T>::check_nearest(int loc_pat)
 extern int file_counter;
 extern int day;
 
-localQueue<patient_f*>  build_queue (BTree btree_registered){
+localQueue<patient_f*>  build_queue (BTree<T>* btree_registered){
     
     file_counter ++;
     localQueue<patient_f*> palist;
@@ -185,7 +185,7 @@ localQueue<patient_f*>  build_queue (BTree btree_registered){
             }
             palist.En_queue(pat);
             op tmp = op(date_treat,pat->id);
-            btree_registered.BTree_insert(tmp);
+            btree_registered->BTree_insert(tmp);
             cout << endl;
         }
         /*

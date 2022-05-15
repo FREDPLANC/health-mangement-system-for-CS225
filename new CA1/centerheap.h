@@ -147,15 +147,15 @@ template<class T> class centerHeap
         void remove(T key);   // Delete the node whose key is key
         void destroy();  // destroy
 
-        bool contain_pat(BTree tree, patient_f *pat)
+        bool contain_pat(BTree<T>* tree, patient_f *pat)
 
 
         centerNode<T>* search_id(centerNode<T> *root, int id);
-        void appointment_process(int date, BTree btree_delaytreated, BTree btree_treated, BTree btree_appointment, BTree btree_registered, Maindata<int> center );//process the appoint
-        void mediumRisk_process(int date, BTree btree_delaytreated, BTree btree_treated, BTree btree_appointment, BTree btree_registered, Maindata<int> center); //medium risk process;  
-        void treatment_process(int date, BTree btree_delaytreated, BTree btree_treated, BTree btree_appointment, BTree btree_registered, Maindata<int> center );  // process the treatment
-        void pop_patient_wrtddl(centerNode<T> *root, int ddl, BTree btree_registered, BTree btree_appointment,int date,Maindata<int> center);
-        void withdraw(int id, BTree btree_delaytreated,  BTree btree_appointment, BTree btree_registered, Maindata<int> center);
+        void appointment_process(int date, BTree<T>* btree_delaytreated, BTree<T>* btree_treated, BTree<T>* btree_appointment, BTree<T>* btree_registered, Maindata<int>* center );//process the appoint
+        void mediumRisk_process(int date, BTree<T>* btree_delaytreated, BTree<T>* btree_treated, BTree<T>* btree_appointment, BTree<T>* btree_registered, Maindata<int>* center); //medium risk process;  
+        void treatment_process(int date, BTree<T>* btree_delaytreated, BTree<T>* btree_treated, BTree<T>* btree_appointment, BTree<T>* btree_registered, Maindata<int>* center );  // process the treatment
+        void pop_patient_wrtddl(centerNode<T> *root, int ddl, BTree<T>* btree_registered, BTree<T>* btree_appointment,int date,Maindata<int>* center);
+        void withdraw(int id, BTree<T>* btree_delaytreated,  BTree<T>* btree_appointment, BTree<T>* btree_registered, Maindata<int>* center);
         int check_nearest(int loc_pat);
         //void build(); // Read the hospital general queue
         void add_patient(patient_f p);
