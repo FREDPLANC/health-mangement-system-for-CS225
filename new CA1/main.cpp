@@ -22,6 +22,7 @@ int week = 0;
 int date_treat;
 int week_counter = 1;
 int month_counter = 1;
+int file_counter = 0;
 Maindata<int> center;
 BTree 1_btree_delaytreated;
 BTree 1_btree_treated;
@@ -35,6 +36,7 @@ BTree 3_btree_delaytreated;
 BTree 3_btree_treated;
 BTree 3_btree_appointment;
 BTree 3_btree_registered;
+
 void choice_0(); // the interactive interface of different choice entered by the user
 void choice_1();
 void choice_2();
@@ -138,6 +140,7 @@ int main()
 {   
     capacity_total = 0;
     int choice_user;
+    int mode_choice;
     for(int i = 0; i < 3;i++){
         hospital* hop = new hospital(); // initialize the hospital information
         hop->hosp_id = i;
@@ -146,10 +149,13 @@ int main()
         hop->loc = 2+i;
         H[i] = hop;
         capacity_total += hop->capacity;
-    } 
-
-    while(month<=12&&day<=31){
-		printf("what do you want to do for the medical treatment\n");
+    }
+    /*
+    printf("Select mode: auto( enter: 54188 ) or manual(else)! \n");
+    scanf("%d",&mode_choice);
+    if(mode_choice == 54188){
+        while(month<=12&&day<=31){
+		printf("what do you want to do for the medical treatment(auto mode)\n");
 		printf("Enter the number from 0-3:\n");
 		printf("0. waiting for the time to flow half day\n");
 		printf("1. Skip a week.\n");
@@ -181,9 +187,46 @@ int main()
             cout << endl << "Thank you for using our program, goodbye!" << endl;
             return 0;
         }
-    
-    
-    cout << endl << "we have ended a year, thank you" << endl;
-	return 0;
+        }
     }
+    */
+    
+
+    while(month<=12&&day<=31){
+        printf("what do you want to do for the medical treatment\n");
+        printf("Enter the number from 0-3:\n");
+        printf("0. waiting for the time to flow half day\n");
+        printf("1. Skip a week.\n");
+        printf("2. Skip this month.\n");
+        printf("3. Show the time.\n");
+        printf("4. End the program.\n");
+        scanf("%d",&choice_user);
+        if(choice_user<0||choice_user>4){
+            printf("Wrong input please try again.\n");
+            continue;
+        }
+        else if(choice_user == 0){
+            choice_0();
+            continue;
+        }
+        else if(choice_user == 1){
+            choice_1();
+            continue;
+        }
+        else if(choice_user == 2){
+            choice_2();
+            continue;
+        }
+        else if(choice_user == 3){
+            choice_3();
+            continue;
+        }
+        else if(choice_user == 4){
+            cout << endl << "Thank you for using our program, goodbye!" << endl;
+            return 0;
+        }
+    }
+    }
+    cout << endl << "we have ended a year, thank you" << endl;
+    return 0;
 }

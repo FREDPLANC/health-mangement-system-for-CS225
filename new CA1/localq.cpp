@@ -50,14 +50,29 @@ int centerHeap<T>::check_nearest(int loc_pat)
     
 }
 
+extern int file_counter;
+extern int day;
 
 localQueue<patient_f*>  build_queue (BTree btree_registered){
     
+    file_counter ++;
     localQueue<patient_f*> palist;
     char filename[256];
+    string tmpered = to_string(file_counter) + to_string(day)+".csv";
+    int i;
+    for( i=0;i<tmpered.length();i++)
+        filename[i] = tmpered[i];
+    filename[i] = '\0';//注意，一定要手动加上 '\0'
+    /*
     cout<<"请输入文件名"<<endl;
     cin>>filename;
+    */
     int omitline = 0; // the line to be neglected
+
+    if(file_counter == 3){
+        file_counter = 0;
+    }
+
     ifstream infile(filename);
     
     while(infile.good()){
