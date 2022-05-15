@@ -16,9 +16,14 @@ template <class T> int Maindata<T>::insert(patient_f* p)
     b = medical_status.insert(p);
     c = registration.insert(p);
     d = treatment.insert(p);
-    if(a== b==c == d  && a!= -1)
-    return a ;
-    else
+    if(a == b &&  b == c && c == d  && a!= -1) return a ;
+    return -1;
+}
+template<class T> int Maindata<T>::indx_to_id(int indx){
+    if(person.indx_to_id(indx) == medical_status.indx_to_id(indx) && medical_status.indx_to_id(indx) == registration.indx_to_id(indx) && registration.indx_to_id(indx) == treatment.indx_to_id(indx) && treatment.indx_to_id(indx) != -1) {
+        return person.indx_to_id(indx);
+    }  
+    cout << "wrong fucking indx_to_id" << endl;
     return -1;
 }
 template <class T> bool Maindata<T>::search(int id)
@@ -61,31 +66,33 @@ template <class T> void Maindata<T>::modifytreatment(int id,patient_f* p)
 }
 template <class T> void Maindata<T>::remove(patient_f* p)
 {
-    person.remove(p);
-    medical_status.remove(p);
-    registration.remove(p);
-    treatment.remove(p);
+    int id = p->id;
+    person.remove(id);
+    medical_status.remove(id);
+    registration.remove(id);
+    treatment.remove(id);
     return;
 }
-template <class T> bool Maindata<T>::add_patient(patient_f p)
+/*template <class T> bool Maindata<T>::add_patient(patient_f p)
 {
     switch (p->treatment_type)
     {
-    case 0/* constant-expression */:
-        center1->add_patient(p);
+
+        center1.add_patient(p);
         break;
-    case 1
-        center2->add_patient(p);
+    case 1:
+        center2.add_patient(p);
         break;
 
-    case 2
-        center3->add_patient(p);
+    case 2:
+        center3.add_patient(p);
         break;
     default:
         cout<<"wrong treatment type!"<<endl; 
         break;
     }
 }
+*/
 template <class T> Person*Maindata<T>::retrieveperson(int id)
 {
     return person.retrieve(id);
@@ -110,9 +117,9 @@ template <class T> patient_f Maindata<T>::retrievepatient_f(int id){
     Medical_Status *t2 = retrievestatus(id);
     Registration *t3 = retrieveregistration(id);
     Treatment *t4 = retrievetreatment(id);
-    strcpy(t.name,t1->name);
-    strcpy(t.contact,t1->contact);
-    strcpy(t.address,t1->address);
+    strcpy(temp.name,t1->name);
+    strcpy(temp.contact,t1->contact);
+    strcpy(temp.address,t1->address);
     temp.priority = t1->priority;
     temp.aging = t1->aging;
     temp.birth = t1->birthday;
@@ -125,9 +132,9 @@ template <class T> patient_f Maindata<T>::retrievepatient_f(int id){
     temp.treat_ddl = t3->treat_ddl;
     temp.treat_hospital = t4->treat_hospital;
     temp.treat_time = t4->treatment_time;
-    temp.treat_type = t3->treatment_type;
+    temp.treatment_type = t3->treatment_type;
 
-
+    return temp;
 }
 
 
@@ -135,19 +142,20 @@ template <class T> patient_f Maindata<T>::retrievepatient_f(int id){
 
 //relation 's member function
 
-template <class T> int relation<T>::insert(patient_f* p)// 永远先插入未满的空桶, 返回当前插入的是第几个位置(从1开始)
+template <class T > int relation<T>::insert(patient_f* p)// 永远先插入未满的空桶, 返回当前插入的是第几个位置(从1开始)
 {
     
     bool all_full = true;
-    T temp=new T(patient_f* p;);
+    T temp_1 (p);
+    T * temp = &temp_1;
     extern int Global_Block_count;
     int block_count = 0;
     // 遍历relation中的所有block
-    typename list< Block<T> >::iterator iterator=this->blocks.begin();
+    typename list< block<T> >::iterator iterator = this->blocks.begin();
     for ( iterator=this->blocks.begin(); iterator != this->blocks.end(); ++iterator, ++block_count)
     {
         if (!iterator->full()) { //若当前block未满, 放入overflowblock
-        iterator->overflowBlock.push_back(temp);
+        iterator->overflowBlock.push_back(*temp); 
         //若插入后满, sort
         if (iterator->full()) iterator->Sort();
         all_full = false;
@@ -159,11 +167,11 @@ template <class T> int relation<T>::insert(patient_f* p)// 永远先插入未满
     // 若当前relation为空或已满
     if (blocks.empty() || all_full) {
         block<T> newBlock;
-        newBlock.overflowBlock.push_back(temp);
+        newBlock.overflowBlock.push_back(*temp);
         blocks.push_back(newBlock);
         Global_Block_count++;
         int result = block_count* MAX_BLOCK_CAPACITY +1;
-        return Global_Block_count;
+        return result;
     }
 
     // unreachable
@@ -172,7 +180,8 @@ template <class T> int relation<T>::insert(patient_f* p)// 永远先插入未满
 template <class T> bool relation<T>::search(int id)
 {
     T* x = this->retrieve(id);
-    return (x->getid() != -1);
+    if (!x) return false;
+    return  true;
 }
 
 template <class T> int relation<T> ::indx_to_id(int block_rank)
@@ -180,29 +189,28 @@ template <class T> int relation<T> ::indx_to_id(int block_rank)
     int block_row = (block_rank-1) / MAX_BLOCK_CAPACITY; //记录是第几个block
     int block_column = block_rank - block_row * MAX_BLOCK_CAPACITY; //记录是该block 的第几个元素
     int i = 0;
-    typename list< Block<T> >::iterator iterator=this->blocks.begin();
-    for (iterator=this->blocks.begin(); iterator != this->blocks.end() && i < block_row; ++iterator)
+    typename list< block<T> >::iterator iterator=this->blocks.begin();
+    for (iterator=this->blocks.begin(); iterator != this->blocks.end() && i < block_row; ++iterator);
     vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
-    return Blocker[block_column -1].getid();
+    return Blocker[block_column -1].getID();
 }
 template <class T> T *relation<T>::retrieve(int id)
 {   
-    typename list< Block<T> >::iterator iterator=this->blocks.begin();
+    typename list< block<T> >::iterator iterator=this->blocks.begin();
     for (iterator=this->blocks.begin(); iterator != this->blocks.end(); ++iterator) {
         vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
         for (int i=0;i<(int)Blocker.size();i++){
-            if (Blocker[i].getid() == id)
+            if (Blocker[i].getID() == id)
             return &Blocker[i];
         }
     }
-    T temp;
-    temp.setid(-1);
-    return &temp;
+    
+    return NULL;
 }
 template <class T> void relation<T>::modify(int id,patient_f* p)
 {
     T *tmp=retrieve(id);
-    if (tmp->getid()==-1)
+    if (tmp->getID()==-1)
     {
         return;
     }
@@ -211,7 +219,7 @@ template <class T> void relation<T>::modify(int id,patient_f* p)
 
 }
 template<class T> bool relation<T>::remove(int id) {
-    typename list< Block<T> >::iterator iterator=this->blocks.begin();
+    typename list< block<T> >::iterator iterator=this->blocks.begin();
     for (iterator=this->blocks.begin(); iterator != this->blocks.end(); ++iterator) {
         vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
         for (int i=0;i<(int)Blocker.size();i++)
