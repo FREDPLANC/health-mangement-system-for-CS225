@@ -12,6 +12,7 @@ database文件夹： 包括数据库的基本构建操作
 三种priority type遵循的rules：
 
   0：之前定义的basic rule 
+  
   1：年长先治  
   2：先到先治  
 treated  appointment  registered
