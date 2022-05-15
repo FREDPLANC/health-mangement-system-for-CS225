@@ -86,6 +86,7 @@ template<class T> class Maindata
         CBPlusTree mainBP_Tree;
 
     };
+    bool cmp(int x,int y);
     int insert(patient_f* p); // 成功则返回database ID, 失败则返回-1
     int indx_to_id (int indx);
     bool search(int id);

@@ -213,7 +213,7 @@ template<class T> void  Maindata<T>::withdraw(int id, BTree<op>* btree_delaytrea
 }
 template<class T> bool centerHeap<T>::contain_pat(BTree<op>* tree, patient_f *pat){
     op op1(pat->time,pat->id);
-    vector<op> contain_list = NULL;
+    vector<op> contain_list;
     tree->find(op1,contain_list);
     for (vector<op>::iterator iter = contain_list.begin(); iter != contain_list.end(); iter++)
     {
