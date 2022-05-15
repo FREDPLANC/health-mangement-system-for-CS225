@@ -10,9 +10,12 @@ k-fucking-d
 b_tree 文件夹：包括b树和b+树的基本代码以及操作  
 database文件夹： 包括数据库的基本构建操作  
 三种priority type遵循的rules：
-  0：之前定义的basic rule
-  1：年长先治
-  2：先到先治
+  0：之前定义的basic rule  
+  
+  1：年长先治  
+  
+  2：先到先治  
+  
 treated  appointment  registered
 有关内部代码：
   1. 总内存：maindata 内部有四个relation 每个relation的存储方式是由list类型的block实现的，block存的类型包括person,medical_status,registration,treatment四个类型。  
