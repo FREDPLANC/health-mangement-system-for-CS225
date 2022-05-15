@@ -100,8 +100,8 @@ template<class T> class Maindata
     Treatment*retrievetreatment(int id);
     patient_f retrievepatient_f(int id);
     void remove(patient_f* p);
-    void build(BTree<op>* btree_registered_1,BTree<op>* btree_registered_2,BTree<op>* btree_registered_3);
-    bool add_patient(patient_f p);
+    void build(BTree<op>* btree_registered_1 , BTree<op>* btree_appointment_1, BTree<op>* btree_delaytreated_1,BTree<op>* btree_registered_2 , BTree<op>* btree_appointment_2, BTree<op>* btree_delaytreated_2,BTree<op>* btree_registered_3 , BTree<op>* btree_appointment_3, BTree<op>* btree_delaytreated_3);
+    bool add_patient(patient_f p,BTree<op>* btree_registered_1 , BTree<op>* btree_appointment_1, BTree<op>* btree_delaytreated_1,BTree<op>* btree_registered_2 , BTree<op>* btree_appointment_2, BTree<op>* btree_delaytreated_2,BTree<op>* btree_registered_3 , BTree<op>* btree_appointment_3, BTree<op>* btree_delaytreated_3);
     centerHeap<int>* center1;
     centerHeap<int>* center2;
     centerHeap<int>* center3;

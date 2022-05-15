@@ -50,7 +50,7 @@ void half_day_process(){ // when time flows a day, it needs the following steps
     daily_hosp_setZero();  // clear the content patient of each hospital
     extern int date_treat;
     date_treat = month*1000 + day*10 + am; // the converted time
-    center.build(&btree_registered_1,&btree_registered_2,&btree_registered_3); // insert the csv daily data;
+    center.build(&btree_registered_1 , &btree_appointment_1,  &btree_delaytreated_1, &btree_registered_2 , &btree_appointment_2, &btree_delaytreated_2,&btree_registered_3 ,  &btree_appointment_3, &btree_delaytreated_3); // insert the csv daily data;
     center.mediumRisk_process(date_treat, &btree_delaytreated_1, &btree_treated_1, &btree_appointment_1, &btree_registered_1,center.center1);
     center.treatment_process(date_treat, &btree_delaytreated_1, &btree_treated_1, &btree_appointment_1, &btree_registered_1, center.center1); // treat queue generated
     center.appointment_process(date_treat, &btree_delaytreated_1, &btree_treated_1, &btree_appointment_1, &btree_registered_1, center.center1);  // appointment queue generated

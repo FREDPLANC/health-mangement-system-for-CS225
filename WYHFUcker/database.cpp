@@ -75,7 +75,7 @@ template <class T> void Maindata<T>::remove(patient_f* p)
     treatment.remove(id);
     return;
 }
-template <class T> bool Maindata<T>::add_patient(patient_f p)
+template <class T> bool Maindata<T>::add_patient(patient_f p,BTree<op>* btree_registered_1 , BTree<op>* btree_appointment_1, BTree<op>* btree_delaytreated_1,BTree<op>* btree_registered_2 , BTree<op>* btree_appointment_2, BTree<op>* btree_delaytreated_2,BTree<op>* btree_registered_3 , BTree<op>* btree_appointment_3, BTree<op>* btree_delaytreated_3)
 {
     switch (p->treatment_type)
     {
@@ -83,7 +83,7 @@ template <class T> bool Maindata<T>::add_patient(patient_f p)
         
         if (p.status==54188)
         {
-            withdraw(p.id);
+            withdraw(p.id,btree_delaytreated_1, btree_appointment_1,btree_registered_1,center1);
         }
         else{
             center1->insert(p);
@@ -93,7 +93,7 @@ template <class T> bool Maindata<T>::add_patient(patient_f p)
     case 1:
         if (p.status==54188)
         {
-            withdraw(p.id);
+            withdraw(p.id,btree_delaytreated_2,btree_appointment_2,btree_registered_2,center2);
         }
         else{
             center2->insert(p);
@@ -104,7 +104,7 @@ template <class T> bool Maindata<T>::add_patient(patient_f p)
     case 2:
         if (p.status==54188)
         {
-            withdraw(p.id);
+            withdraw(p.id,btree_delaytreated_3,btree_appointment_3,btree_registered_3,center3);
         }
         else{
             center3->insert(p);
