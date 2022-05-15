@@ -19,7 +19,7 @@ using namespace std;
 
 
 /*已经治疗人员周报告*/
-template<class T> void Maindata<T>:: report_treated(BTree<T> btree_treated)
+template<class T> void Maindata<T>:: report_treated(BTree<T>* btree_treated)
 {
     extern int week_counter;
     string tempstr = to_string(week_counter);
@@ -30,10 +30,14 @@ template<class T> void Maindata<T>:: report_treated(BTree<T> btree_treated)
     int tmp_date = date - 7;
     /*把时间扔进b树输出这部分人的id*/
     vector<op> b_treated = NULL;
+    if (btree_treated == NULL)
+    {
+        return;
+    }
     for (i=tmp_date, i<=date, i++)
     {
         op op1(tmp_date,0);
-        btree_treated.find(op1,b_treated);
+        btree_treated->find(op1,b_treated);
     }
     /*把这部分人id扔进b+树输出block的index*/
     vector<int> bp_treated = NULL;
@@ -68,7 +72,7 @@ template<class T> void Maindata<T>:: report_treated(BTree<T> btree_treated)
 }
 
 /*已经预约人员周报告*/
-template<class T> void Maindata<T>:: report_appointment(BTree<T> btree_appointment)
+template<class T> void Maindata<T>:: report_appointment(BTree<T>* btree_appointment)
 {
     extern int week_counter;
     string tempstr = to_string(week_counter);
@@ -79,6 +83,10 @@ template<class T> void Maindata<T>:: report_appointment(BTree<T> btree_appointme
     int tmp_date = date - 7;
     /*把时间扔进b树输出这部分人的id*/
     vector<op> b_appointment = NULL;
+    if (btree_appointment == NULL)
+    {
+        return;
+    }
     for (i=tmp_date, i<=date, i++)
     {
         op op1(tmp_date,0);
@@ -117,7 +125,7 @@ template<class T> void Maindata<T>:: report_appointment(BTree<T> btree_appointme
 }
 
 /*已经注册人员周报告*/
-template<class T> void Maindata<T>:: report_registered(BTree<T> btree_registered)
+template<class T> void Maindata<T>:: report_registered(BTree<T>* btree_registered)
 {
     extern int week_counter;
     string tempstr = to_string(week_counter);
@@ -128,6 +136,10 @@ template<class T> void Maindata<T>:: report_registered(BTree<T> btree_registered
     int tmp_date = date - 7;
     /*把时间扔进b树输出这部分人的id*/
     vector<op> b_registered = NULL;
+    if (btree_registered == NULL)
+    {
+        return;
+    }
     for (i=tmp_date, i<=date, i++)
     {
         op op1(tmp_date,0);
@@ -165,7 +177,7 @@ template<class T> void Maindata<T>:: report_registered(BTree<T> btree_registered
     fout.close();
 }
 
-template<class T> void Maindata<T>:: week_report(BTree<T> btree_treated,BTree<T> btree_appointment,BTree<T> btree_registered)
+template<class T> void Maindata<T>:: week_report(BTree<T>* btree_treated,BTree<T>* btree_appointment,BTree<T>* btree_registered)
 {
     report_treated(btree_treated);
     report_appointment(btree_appointment);
@@ -174,7 +186,7 @@ template<class T> void Maindata<T>:: week_report(BTree<T> btree_treated,BTree<T>
     week_counter++;
 }
 
-template<class T> void Maindata<T>:: month_report(BTree<T> btree_treated,BTree<T> btree_appointment,BTree<T> btree_registered,int withdraw)
+template<class T> void Maindata<T>:: month_report(BTree<T>* btree_treated,BTree<T>* btree_appointment,BTree<T>* btree_registered,int withdraw)
 {
     extern int month;
     extern int month_counter;
