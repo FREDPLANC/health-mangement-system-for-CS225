@@ -1,4 +1,5 @@
-# SHIT_ASS
+# SHIT_ASS  
+![ABB9527C720B7AD6B5503D6BB994453C](https://user-images.githubusercontent.com/102898205/168458983-0a424c34-ea2e-43bf-a48a-773ca6a02729.jpg)
 lyx is our son!!!  
 基拉基拉  
 k-fucking-d  
