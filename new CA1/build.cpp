@@ -26,8 +26,11 @@ void Maindata<T>::build(BTree<T>* 1_btree_registered,BTree<T>* 2_btree_registere
     int l3 = Q3.getlength();
     for (int i=1;i<=l1;i++)
     {
-        patient_f p1=Q1.De_queue() ;
-        insert(p1);
+        patient_f p1= Q1.De_queue() ;
+        patient_f *p_temp = &p1; 
+        int idx_block = this->insert(p_temp);
+        if (idx_block == -1) cout << "wrong dequeue_1" << endl;
+        if (this->mainBP_Tree.insert(p1.id, idx_block) == -1) cout<< "wrong insert B+tree" << endl;
         add_patient(p1); //first pop the content of the queue one by one
         
 
@@ -35,13 +38,19 @@ void Maindata<T>::build(BTree<T>* 1_btree_registered,BTree<T>* 2_btree_registere
     for (int i=1;i<=l2;i++)
     {   
         patient_f p2=Q2.De_queue() ;// same for other queues
-        insert(p2);
+        patient_f *p_temp = &p2; 
+        int idx_block = this->insert(p_temp);
+        if (idx_block == -1) cout << "wrong dequeue_2" << endl;
+        if (this->mainBP_Tree.insert(p2.id, idx_block) == -1) cout<< "wrong insert B+tree" << endl;
         add_patient(p2);
     }
     for (int i=1;i<=l3;i++)
     {
         patient_f p3=Q3.De_queue() ;
-        insert(p2);
+        patient_f *p_temp = &p3; 
+        int idx_block = this->insert(p_temp);
+        if (idx_block == -1) cout << "wrong dequeue_3" << endl;
+        if (this->mainBP_Tree.insert(p3.id, idx_block) == -1) cout<< "wrong insert B+tree" << endl;
         add_patient(p3);
     }
 
