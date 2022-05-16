@@ -1,5 +1,4 @@
-#ifndef BPLUS_NODE
-#define BPLUS_NODE
+
 
 #include "BPlus_node.h"
 #include <stdio.h>
@@ -248,5 +247,3 @@ int CLeafNode::getChildIndex(KeyType key, int keyIndex)const
 {
 	return keyIndex;
 }
-
-#endif

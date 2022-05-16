@@ -19,7 +19,7 @@ template <class T> int Maindata<T>::insert(patient_f* p)
     c = registration.insert(p);
     d = treatment.insert(p);
     if(a == b &&  b == c && c == d  && a!= -1) return a ;
-    return -1;
+    return 0;
 }
 template<class T> int Maindata<T>::indx_to_id(int indx){
     if(person.indx_to_id(indx) == medical_status.indx_to_id(indx) && medical_status.indx_to_id(indx) == registration.indx_to_id(indx) && registration.indx_to_id(indx) == treatment.indx_to_id(indx) && treatment.indx_to_id(indx) != -1) {
@@ -87,6 +87,7 @@ template <class T> bool Maindata<T>::add_patient(patient_f p,BTree<op>* btree_re
         }
         else{
             center1->insert(p);
+            
         }
         //center1.add_patient(p);
         break;
@@ -97,6 +98,7 @@ template <class T> bool Maindata<T>::add_patient(patient_f p,BTree<op>* btree_re
         }
         else{
             center2->insert(p);
+            
         }
         //center1.add_patient(p);
         break;
@@ -108,6 +110,7 @@ template <class T> bool Maindata<T>::add_patient(patient_f p,BTree<op>* btree_re
         }
         else{
             center3->insert(p);
+            
         }
         //center1.add_patient(p);
         break;
@@ -143,6 +146,10 @@ template <class T> patient_f Maindata<T>::retrievepatient_f(int id){
     Medical_Status *t2 = retrievestatus(id);
     Registration *t3 = retrieveregistration(id);
     Treatment *t4 = retrievetreatment(id);
+    if((t1 == NULL)||(t2 == NULL)||(t3 == NULL)||(t4 == NULL)){
+        cout<<"ji"<<endl;
+        return temp;
+    }
     strcpy(temp.name,t1->name);
     strcpy(temp.contact,t1->contact);
     strcpy(temp.address,t1->address);
@@ -216,10 +223,14 @@ template <class T> int relation<T> ::indx_to_id(int block_rank)
     int block_column = block_rank - block_row * MAX_BLOCK_CAPACITY; //记录是该block 的第几个元素
     int i = 0;
     typename list< block<T> >::iterator iterator=this->blocks.begin();
-    for (iterator=this->blocks.begin(); iterator != this->blocks.end() && i < block_row; ++iterator);
+    for (iterator=this->blocks.begin(); iterator != this->blocks.end() && i < block_row; ++iterator){
+        i++;
+    }
+
     vector<T>& Blocker = (iterator->full()) ? iterator->array : iterator->overflowBlock;
     return Blocker[block_column -1].getID();
 }
+
 template <class T> T *relation<T>::retrieve(int id)
 {   
     typename list< block<T> >::iterator iterator=this->blocks.begin();
@@ -230,7 +241,7 @@ template <class T> T *relation<T>::retrieve(int id)
             return &Blocker[i];
         }
     }
-    
+    cout<<"false in retrieve id"<<endl;
     return NULL;
 }
 template <class T> void relation<T>::modify(int id,patient_f* p)
@@ -238,6 +249,7 @@ template <class T> void relation<T>::modify(int id,patient_f* p)
     T *tmp=retrieve(id);
     if (tmp->getID()==-1)
     {
+        cout<<"modify ji"<<endl;
         return;
     }
     tmp->modify(p);

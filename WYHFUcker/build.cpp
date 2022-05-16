@@ -33,9 +33,26 @@ void Maindata<T>::build( BTree<op>* btree_registered_1 , BTree<op>* btree_appoin
         patient_f *p_temp = &p1; 
         
         
-        int idx_block = this->insert(p_temp);
-        if (idx_block == -1) cout << "wrong dequeue_1" << endl;
-        if (this->mainBP_Tree.insert(p1.id, idx_block) == -1) cout<< "wrong insert B+tree" << endl;
+        //int idx_block = this->insert(p_temp);
+        //if (idx_block == -1) cout << "wrong dequeue_1" << endl;
+        if (p1.status != 54188){
+            if (this->search(p1.id) == false){
+                int idx_block = this->insert(p_temp);
+                 if(idx_block == 0){
+                    cout<<"wrong insert database" << endl;
+                }
+                if (this->mainBP_Tree.insert(p1.id, idx_block) == false) {
+                    cout<< "wrong insert B+tree" << endl;
+                }
+            }else{
+                modify(p1.id,p_temp);
+            }
+           
+        }else{
+            if(this->search(p1.id) == 1){
+                modify(p1.id,p_temp);
+            }
+        }
         //add_patient(p1); //first pop the content of the queue one by one
         add_patient(p1, btree_registered_1 , btree_appointment_1,  btree_delaytreated_1, btree_registered_2 ,  btree_appointment_2,  btree_delaytreated_2, btree_registered_3 ,  btree_appointment_3,  btree_delaytreated_3);
         
@@ -48,9 +65,26 @@ void Maindata<T>::build( BTree<op>* btree_registered_1 , BTree<op>* btree_appoin
         patient_f p2=Q2.De_queue() ;// same for other queues
         patient_f *p_temp = &p2; 
         
-        int idx_block = this->insert(p_temp);
-        if (idx_block == -1) cout << "wrong dequeue_2" << endl;
-        if (this->mainBP_Tree.insert(p2.id, idx_block) == -1) cout<< "wrong insert B+tree" << endl;
+        //int idx_block = this->insert(p_temp);
+        //if (idx_block == -1) cout << "wrong dequeue_2" << endl;
+         if (p2.status != 54188){
+            if (this->search(p2.id) == false){
+                int idx_block = this->insert(p_temp);
+                 if(idx_block == 0){
+                    cout<<"wrong insert database" << endl;
+                }
+                if (this->mainBP_Tree.insert(p2.id, idx_block) == false) {
+                    cout<< "wrong insert B+tree" << endl;
+                }
+            }else{
+                modify(p2.id,p_temp);
+            }
+           
+        }else{
+            if(this->search(p2.id) == 1){
+                modify(p2.id,p_temp);
+            }
+        }
         //add_patient(p2);
         add_patient(p2, btree_registered_1 , btree_appointment_1,  btree_delaytreated_1, btree_registered_2 ,  btree_appointment_2,  btree_delaytreated_2, btree_registered_3 ,  btree_appointment_3,  btree_delaytreated_3);
         
@@ -61,9 +95,26 @@ void Maindata<T>::build( BTree<op>* btree_registered_1 , BTree<op>* btree_appoin
         patient_f p3=Q3.De_queue() ;
         patient_f *p_temp = &p3;
         
-        int idx_block = this->insert(p_temp);
-        if (idx_block == -1) cout << "wrong dequeue_3" << endl;
-        if (this->mainBP_Tree.insert(p3.id, idx_block) == -1) cout<< "wrong insert B+tree" << endl;
+        //int idx_block = this->insert(p_temp);
+        //if (idx_block == -1) cout << "wrong dequeue_3" << endl;
+         if (p3.status != 54188){
+            if (this->search(p3.id) == false){
+                int idx_block = this->insert(p_temp);
+                 if(idx_block == 0){
+                    cout<<"wrong insert database" << endl;
+                }
+                if (this->mainBP_Tree.insert(p3.id, idx_block) == false) {
+                    cout<< "wrong insert B+tree" << endl;
+                }
+            }else{
+                modify(p3.id,p_temp);
+            }
+           
+        }else{
+            if(this->search(p3.id) == 1){
+                modify(p3.id,p_temp);
+            }
+        }
         //add_patient(p3);
         add_patient(p3, btree_registered_1 , btree_appointment_1,  btree_delaytreated_1, btree_registered_2 ,  btree_appointment_2,  btree_delaytreated_2, btree_registered_3 ,  btree_appointment_3,  btree_delaytreated_3);
          

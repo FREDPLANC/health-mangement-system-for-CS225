@@ -1,7 +1,6 @@
-#ifndef BPLUS_TREE
-#define BPLUS_TREE
+
 #include "BPlustree.h"
-#include "BPlus_node.cpp"
+//#include "BPlus_node.cpp"
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -507,5 +506,3 @@ void CBPlusTree::recursive_search(CNode* pNode, KeyType key, SelectResult& resul
 		return recursive_search(((CInternalNode*)pNode)->getChild(childIndex), key, result);
 	}
 }
-
-#endif

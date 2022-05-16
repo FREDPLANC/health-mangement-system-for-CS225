@@ -541,18 +541,21 @@ template <class T> centerNode<T>* centerHeap<T>::search_id(centerNode<T> *root, 
 template <class T>
 void Maindata<T>::pop_patient_wrtddl(centerNode<T> *root, int ddl, BTree<op>* btree_registered, BTree<op>* btree_appointment,int date, centerHeap<T>* center) //返回指向当天有ddl的病人的指针
 {
+    if (root==NULL)
+        return;
+
     centerNode<T> *t = root;    // temporary node
+    
     patient_f temper = retrievepatient_f(t->id);
     patient_f *temp = &temper;
 
-    if (root==NULL)
-        return;
+    
 
     do
     {
         if ( temp->treat_ddl == ddl){
             temp->treat_time = ddl + 10;
-            temp->treat_hospital = center->check_nearest(temp->loc);
+            temp->treat_hospital = center->check_nearest(temp->loc,center->TreatType);
             op temper = op(temp->time,temp->id);
             btree_registered->BTree_delete(temper);
             op temper_appoint = op(date,temp->id);

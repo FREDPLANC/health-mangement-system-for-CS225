@@ -139,17 +139,24 @@ void choice_0(){
 
 int main()
 {   
-    capacity_total = 0;
+    //capacity_total = 0;
     int choice_user;
     int mode_choice;
     for(int i = 0; i < 3;i++){
         hospital* hop = new hospital(); // initialize the hospital information
         hop->hosp_id = i;
-        hop->capacity = 1+i;
-        hop->content = 0;
+        hop->capacity_1 = i+1;
+        hop->capacity_2 = i;
+        hop->capacity_3 = i+2;
+
+        //hop->capacity = 1+i;
+        //hop->content = 0;
         hop->loc = 2+i;
         H[i] = hop;
-        capacity_total += hop->capacity;
+        capacity_total_1 += hop->capacity_1;
+        capacity_total_2 += hop->capacity_2;
+        capacity_total_3 += hop->capacity_3;
+        //capacity_total += hop->capacity;
     }
     /*
     printf("Select mode: auto( enter: 54188 ) or manual(else)! \n");

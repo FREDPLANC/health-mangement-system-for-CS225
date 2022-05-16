@@ -126,6 +126,7 @@ template<class T> class centerHeap
         int withdraw_list[1000]; // Check if this ID has ever cancelled a reservation or waited
         int withdraw_number;     // Record the number of people that have been revoked
         int list_numb = 0;
+        int TreatType = 0;
 
         centerNode<T> *min;    // minimum node (the root node of a minimum heap)
         centerNode<T> **cons;    // Maximum memory area
@@ -158,7 +159,7 @@ template<class T> class centerHeap
         //void treatment_process(int date, BTree<op>* btree_delaytreated, BTree<op>* btree_treated, BTree<op>* btree_appointment, BTree<op>* btree_registered,  centerHeap<T>* center );  // process the treatment
         //void pop_patient_wrtddl(centerNode<T> *root, int ddl, BTree<op>* btree_registered, BTree<op>* btree_appointment,int date,Maindata<T>* center);
         //void withdraw(int id, BTree<op>* btree_delaytreated,  BTree<op>* btree_appointment, BTree<op>* btree_registered, Maindata<T>* center);
-        int check_nearest(int loc_pat);
+        int check_nearest(int loc_pat, int treat_type);
         //void build(); // Read the hospital general queue
         //void add_patient(patient_f p);
         void insert(patient_f p);

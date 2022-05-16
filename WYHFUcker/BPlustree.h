@@ -1,7 +1,7 @@
 #ifndef BPLUS_TREE_H
 #define BPLUS_TREE_H
 
-#include "BPlus_node.h"
+#include "BPlus_node.cpp"
 #include <vector>
 using namespace std;
 

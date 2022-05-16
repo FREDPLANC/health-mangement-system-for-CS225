@@ -40,15 +40,23 @@ template<class T> class localQueue
 class hospital{
 	public:
 		int hosp_id;
-		int capacity;
+		int capacity_1;
+		int capacity_2;
+		int capacity_3;
 		int loc;
-		int content;
+		int content_1;
+		int content_2;
+		int content_3;
 
 		hospital(){
 			hosp_id = 0;
-			capacity = 0;
+			capacity_1 = 0;
+			capacity_2 = 0;
+			capacity_3 = 0;
 			loc = 0;
-			content = 0;
+			content_1 = 0;
+			content_2 = 0;
+			content_3 = 0;
 		}
 		
 		
@@ -116,8 +124,12 @@ class patient {
 patient_f* N[1000];  // where patient are stored
 int len_N=0;   // the number of patient
 hospital* H[3]; //three hospital
-int content_total = 0;
-int capacity_total;
+int content_total_1 = 0;
+int content_total_2 = 0;
+int content_total_3 = 0;
+int capacity_total_1 = 0;
+int capacity_total_2 = 0;
+int capacity_total_3 = 0;
 localQueue<patient_f*> build_queue (BTree<op> *btree_registered);
 
 #endif
