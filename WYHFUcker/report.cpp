@@ -10,7 +10,7 @@
 #include <string.h>
 #include <fstream>
 #include <vector>
-
+#include "database.cpp"
 #include "BPlustree.h"
 #include "BPlustree.cpp"
 using namespace std;
@@ -59,7 +59,8 @@ template<class T> void Maindata<T>:: report_treated(BTree<op>* btree_treated)
     }
     
     /*用年龄进行排序*/
-    sort(relate_treated.begin(),relate_treated.end(),this->cmp);
+    std::sort(relate_treated.begin(),relate_treated.end(),[this](auto x, auto y){ return this->cmp(x,y);});
+    //std::sort(v.begin(), v.end(), [this](auto a, auto b){ return this->cmp(a, b);});
     /*打印*/
  
     for (vector<int>::iterator iter = relate_treated.begin(); iter != relate_treated.end(); iter++)
@@ -113,7 +114,8 @@ template<class T> void Maindata<T>:: report_appointment(BTree<op>* btree_appoint
     /*年龄排序模板*/
     
     /*用年龄进行排序*/
-    sort(relate_appointment.begin(),relate_appointment.end(),this->cmp );
+    
+    std::sort(relate_appointment.begin(),relate_appointment.end(),[this](auto x, auto y){ return this->cmp(x,y);});
     /*打印*/
     for (vector<int>::iterator iter = relate_appointment.begin(); iter != relate_appointment.end(); iter++)
     {
@@ -166,7 +168,7 @@ template<class T> void Maindata<T>:: report_registered(BTree<op>* btree_register
     /*年龄排序模板*/
     
     /*用年龄进行排序*/
-    sort(relate_registered.begin(),relate_registered.end(),this->cmp);
+    std::sort(relate_registered.begin(),relate_registered.end(),[this](auto x, auto y){ return this->cmp(x,y);});
     /*打印*/
     for (vector<int>::iterator iter = relate_registered.begin(); iter != relate_registered.end(); iter++)
     {

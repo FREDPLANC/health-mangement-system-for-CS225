@@ -77,7 +77,7 @@ template <class T> void Maindata<T>::remove(patient_f* p)
 }
 template <class T> bool Maindata<T>::add_patient(patient_f p,BTree<op>* btree_registered_1 , BTree<op>* btree_appointment_1, BTree<op>* btree_delaytreated_1,BTree<op>* btree_registered_2 , BTree<op>* btree_appointment_2, BTree<op>* btree_delaytreated_2,BTree<op>* btree_registered_3 , BTree<op>* btree_appointment_3, BTree<op>* btree_delaytreated_3)
 {
-    switch (p->treatment_type)
+    switch (p.treatment_type)
     {
     case 0:
         
@@ -113,8 +113,10 @@ template <class T> bool Maindata<T>::add_patient(patient_f p,BTree<op>* btree_re
         break;
     default:
         cout<<"wrong treatment type!"<<endl; 
-        break;
+        return false;
+        
     }
+    return true;
 }
 
 template <class T> Person*Maindata<T>::retrieveperson(int id)
@@ -147,7 +149,7 @@ template <class T> patient_f Maindata<T>::retrievepatient_f(int id){
     temp.priority = t1->priority;
     temp.aging = t1->aging;
     temp.birth = t1->birthday;
-    temp.id = t1->ID;
+    temp.id = t1->getID();
     temp.loc = t1->loc;
     temp.prof = t1->prof;
     temp.risk = t2->risk;
