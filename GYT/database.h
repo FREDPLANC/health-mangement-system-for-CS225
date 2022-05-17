@@ -84,6 +84,10 @@ template<class T> class Maindata
         relation<Registration> registration;
         relation<Treatment> treatment;
         CBPlusTree mainBP_Tree;
+        center1->TreatType = 0;
+        center2->TreatType = 1;
+        center3->TreatType = 2;
+
 
     };
     bool cmp(int x,int y);

@@ -60,6 +60,25 @@ void half_day_process(){ // when time flows a day, it needs the following steps
     center.mediumRisk_process(date_treat, &btree_delaytreated_3, &btree_treated_3, &btree_appointment_3, &btree_registered_3, center.center3);
     center.treatment_process(date_treat, &btree_delaytreated_3, &btree_treated_3, &btree_appointment_3, &btree_registered_3, center.center3); // treat queue generated
     center.appointment_process(date_treat, &btree_delaytreated_3, &btree_treated_3, &btree_appointment_3, &btree_registered_3, center.center3); // appointment queue generated
+    cout<<"1abc"<<endl;
+        btree_treated_1.printpoint();
+        
+        cout<<"2abc"<<endl;
+        btree_treated_2.printpoint();
+        cout<<"3abc"<<endl;
+        btree_treated_3.printpoint();
+        cout<<"1abc"<<endl;
+        btree_registered_1.printpoint();
+        cout<<"2abc"<<endl;
+        btree_registered_2.printpoint();
+        cout<<"3abc"<<endl;
+        btree_registered_3.printpoint();
+        cout<<"1abc"<<endl;
+        btree_appointment_1.printpoint();
+        cout<<"2abc"<<endl;
+        btree_appointment_2.printpoint();
+        cout<<"3abc"<<endl;
+        btree_appointment_3.printpoint();
 }
 
 
@@ -139,17 +158,24 @@ void choice_0(){
 
 int main()
 {   
-    capacity_total = 0;
+    //capacity_total = 0;
     int choice_user;
     int mode_choice;
     for(int i = 0; i < 3;i++){
         hospital* hop = new hospital(); // initialize the hospital information
         hop->hosp_id = i;
-        hop->capacity = 1+i;
-        hop->content = 0;
+        hop->capacity_1 = i+1;
+        hop->capacity_2 = i;
+        hop->capacity_3 = i+2;
+
+        //hop->capacity = 1+i;
+        //hop->content = 0;
         hop->loc = 2+i;
         H[i] = hop;
-        capacity_total += hop->capacity;
+        capacity_total_1 += hop->capacity_1;
+        capacity_total_2 += hop->capacity_2;
+        capacity_total_3 += hop->capacity_3;
+        //capacity_total += hop->capacity;
     }
     /*
     printf("Select mode: auto( enter: 54188 ) or manual(else)! \n");

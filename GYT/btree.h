@@ -244,7 +244,7 @@ public:
    {
 	   B_find(root,value,vec);
    }
-   void B_find(BTnode<T>* node,T value,vector<T> &vec)
+   /*void B_find(BTnode<T>* node,T value,vector<T> &vec)
    {
    	   if (node == NULL)//当前节点为空的时候
    	   {
@@ -272,6 +272,78 @@ public:
    	   	 
          
    	   }
+   }*/
+   void B_find(BTnode<T>* node,T value,vector<T> &vec)
+   {
+   	   if (node == NULL)//当前节点为空的时候
+   	   {
+   	   	  return ;
+   	   }
+   	   else//当前节点不为空
+   	   {
+   	   	 int i;
+		 int mark=0;
+         //在比它小和比它大的中间子节点中寻找相等的
+   	   	 for (i = 0; i < node->keyNum ;i++)
+   	   	 {
+   	   	 	  if (value <= node->keyvalue[i] )
+               {
+                
+                break;  
+			       
+            }
+            
+   	   }
+         
+         if (i < node->keyNum && value == node->keyvalue[i])//i是下标最大值keyNum-1 
+                  {
+                     
+                     vec.push_back(node->keyvalue[i]);
+                     
+                     
+                     if (!node->isleaf)
+                     {
+                        B_find(node->pchild[i],value,vec);//这里的return别忘了
+                        
+                        B_find(node->pchild[i+1],value,vec);
+                     }
+                     for (int s=i+1;s <node->keyNum && value.time<=node->keyvalue[s].time;s++)
+                     {
+                        //s++;
+                        
+                        if (value == node->keyvalue[s]) {
+                           vec.push_back(node->keyvalue[s]);
+                           if (!node->isleaf)
+                           {
+                              B_find(node->pchild[s+1],value,vec);//这里的return别忘了
+                           }
+                        }
+                     }
+                  }
+                  
+                     //如果之前比查找关键没有相等的关键字并且当前节点是叶子节点的话
+                     //那么在B树中没有一样的关键字(因为后面比关键字更大)
+                  else{
+                     if (node->isleaf)
+                     {
+                        return ;
+                     }
+                     else//如果不是叶子节点则在下面的子节点中寻找
+                     {
+                        B_find(node->pchild[i],value,vec);//这里的return别忘了
+                        return;
+                     }
+                  
+                  }
+		/*if (mark==0){
+			i++;
+		}*/
+         /*if(!node->isleaf&& i==0){
+            B_find(node->pchild[i],value,vec);
+         }*/
+   	   	 //校验当前的关键字是否等于查找的关键字
+         
+      }
    }
 
 

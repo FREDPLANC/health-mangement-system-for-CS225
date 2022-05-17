@@ -30,16 +30,16 @@ template<class T> void Maindata<T>:: report_treated(BTree<op>* btree_treated)
     tempstr = tempstr + ".txt";
     ofstream fout(tempstr);
 
-    int tmp_date = date_treat - 7;
+    int tmp_date = date_treat - 70;
     /*把时间扔进b树输出这部分人的id*/
     vector<op> b_treated;
     if (btree_treated == NULL)
     {
         return;
     }
-    for (int i=tmp_date; i<=date_treat; i++)
+    for (int i=tmp_date; i<=date_treat; i+=10)
     {
-        op op1(tmp_date,0);
+        op op1(i,0);
         btree_treated->find(op1,b_treated);
     }
     /*把这部分人id扔进b+树输出block的index*/
@@ -84,7 +84,7 @@ template<class T> void Maindata<T>:: report_appointment(BTree<op>* btree_appoint
     tempstr = tempstr + ".txt";
     ofstream fout(tempstr);
     
-    int tmp_date = date_treat - 7;
+    int tmp_date = date_treat - 70;
     /*把时间扔进b树输出这部分人的id*/
     vector<op> b_appointment ;
     if (btree_appointment == NULL)
@@ -93,7 +93,7 @@ template<class T> void Maindata<T>:: report_appointment(BTree<op>* btree_appoint
     }
     for (int i=tmp_date; i<=date_treat; i++)
     {
-        op op1(tmp_date,0);
+        op op1(i,0);
         btree_appointment->find(op1,b_appointment);
     }
     /*把这部分人id扔进b+树输出block的index*/
@@ -138,7 +138,7 @@ template<class T> void Maindata<T>:: report_registered(BTree<op>* btree_register
     tempstr = tempstr + ".txt";
     ofstream fout(tempstr);
 
-    int tmp_date = date_treat - 7;
+    int tmp_date = date_treat - 70;
     /*把时间扔进b树输出这部分人的id*/
     vector<op> b_registered ;
     if (btree_registered == NULL)
@@ -147,7 +147,7 @@ template<class T> void Maindata<T>:: report_registered(BTree<op>* btree_register
     }
     for (int i=tmp_date; i<=date_treat; i++)
     {
-        op op1(tmp_date,0);
+        op op1(i,0);
         btree_registered->find(op1,b_registered);
     }
     /*把这部分人id扔进b+树输出block的index*/
@@ -203,22 +203,22 @@ template<class T> void Maindata<T>:: month_report(BTree<op>* btree_treated,BTree
     int tmp_date = date_treat;
     if (month==1||month==3||month==5||month==7||month==8||month==10||month==12)
     {
-        tmp_date = tmp_date - 31;
+        tmp_date = tmp_date - 310;
     }
     if (month==4||month==6||month==9||month==11)
     {
-        tmp_date = tmp_date - 30;
+        tmp_date = tmp_date - 300;
     }
     if (month==2)
     {
-        tmp_date = tmp_date - 28;
+        tmp_date = tmp_date - 280;
     }
     /**********************************************************treated********************************************************************/
     vector<op> month_treated ;
     int treated = 0;
     for (int i=tmp_date; i<=date_treat; i++)
     {
-        op op1(tmp_date,0);
+        op op1(i,0);
         btree_treated->find(op1,month_treated);
         treated++;
     }
@@ -250,7 +250,7 @@ template<class T> void Maindata<T>:: month_report(BTree<op>* btree_treated,BTree
     int registered = 0;
     for (int i=tmp_date; i<=date_treat; i++)
     {
-        op op1(tmp_date,0);
+        op op1(i,0);
         btree_registered->find(op1,month_registered);
         registered++;
     }
@@ -259,7 +259,7 @@ template<class T> void Maindata<T>:: month_report(BTree<op>* btree_treated,BTree
     int appointment = 0;
     for (int i=tmp_date; i<=date_treat; i++)
     {
-        op op1(tmp_date,0);
+        op op1(i,0);
         btree_appointment->find(op1,month_appointment);
         appointment++;
     }

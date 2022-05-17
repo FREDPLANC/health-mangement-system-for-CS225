@@ -17,49 +17,107 @@ using namespace std;
 extern int date_treat;
 void daily_hosp_setZero(void){
     for(int i = 0; i < 3;i++){
-        H[i]->content = 0;
+        H[i]->content_1 = 0;
+        H[i]->capacity_2 = 0;
+        H[i]->capacity_3 = 0;
     }
-    content_total = 0;
+    content_total_1 = 0;
+    content_total_2 = 0;
+    content_total_3 = 0;
     return;
 }
 
 template <class T>
-int centerHeap<T>::check_nearest(int loc_pat)
+int centerHeap<T>::check_nearest(int loc_pat,int treat_type)
 {   
     
     int result = 0;
     int best = 100;
-    int choice = 0;
-    for(int i = 0; i < 3; i++){
-        if(H[i]->content >= H[i]->capacity){
-            continue;
-        }
-        result = loc_pat - H[i]->loc;
-        if(result < 0){
-            result = -result;
-        } 
-        result = result % 10;
-        if(result < best){
-            best = result;
-            choice = i;
-        }
+    int choice = -1;
 
+    switch(treat_type){
+        case 0:
+            for(int i = 0; i < 3; i++){
+                if(H[i]->content_1 >= H[i]->capacity_1){
+                    continue;
+                }
+                result = loc_pat - H[i]->loc;
+                if(result < 0){
+                    result = -result;
+                } 
+                result = result % 10;
+                if(result < best){
+                    best = result;
+                    choice = i;
+                }
+
+            }
+            if(choice == -1){
+                return -1;
+            }
+            H[choice]->content_1++;
+            content_total_1++;
+            return choice;
+
+        case 1:
+            for(int i = 0; i < 3; i++){
+                if(H[i]->content_2 >= H[i]->capacity_2){
+                    continue;
+                }
+                result = loc_pat - H[i]->loc;
+                if(result < 0){
+                    result = -result;
+                } 
+                result = result % 10;
+                if(result < best){
+                    best = result;
+                    choice = i;
+                }
+
+            }
+            if(choice == -1){
+                return -1;
+            }
+            H[choice]->content_2++;
+            content_total_2++;
+            return choice;
+
+        case 2:
+            for(int i = 0; i < 3; i++){
+                if(H[i]->content_3 >= H[i]->capacity_3){
+                    continue;
+                }
+                result = loc_pat - H[i]->loc;
+                if(result < 0){
+                    result = -result;
+                } 
+                result = result % 10;
+                if(result < best){
+                    best = result;
+                    choice = i;
+                }
+
+            }
+            if(choice == -1){
+                return -1;
+            }
+            H[choice]->content_3++;
+            content_total_3++;
+            return choice;
     }
-    H[choice]->content++;
-    content_total++;
-    return choice;
+    return -1;
     
 }
 
 extern int file_counter;
 extern int day;
 
-localQueue<patient_f*>  build_queue (BTree<op>* btree_registered){
+localQueue<patient_f*>  build_queue (){
     
     file_counter ++;
     localQueue<patient_f*> palist;
     char filename[256];
-    string tmpered = to_string(file_counter) + to_string(day)+".csv";
+    string tmpered = "test" + to_string(file_counter) + to_string(day)+".csv";
     int i;
     for( i=0;i<tmpered.length();i++)
         filename[i] = tmpered[i];
@@ -185,8 +243,7 @@ localQueue<patient_f*>  build_queue (BTree<op>* btree_registered){
 
             }
             palist.En_queue(pat);
-            op tmp = op(date_treat,pat->id);
-            btree_registered->BTree_insert(tmp);
+            
         }
         /*
         patient_f* pat = new patient_f();

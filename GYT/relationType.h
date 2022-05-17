@@ -91,10 +91,14 @@ class IDdata { //IDdata 存放了独一无二的identity作为主键。
             return;
         }
         int getID() {
+            if (ID==-1)
+            {
+                cout<<"fuck"<<endl;
+            }
             return this->ID;
         }
     private:
-        int ID;
+        int ID = -1;
 };
 
 

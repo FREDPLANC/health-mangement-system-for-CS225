@@ -20,10 +20,27 @@ using namespace std;
 //content_total Records how many appointments are made today
 /*******************************************************************************************************************/
 template<class T> void  Maindata<T>::appointment_process(int date, BTree<op>* btree_delaytreated, BTree<op>* btree_treated, BTree<op>* btree_appointment, BTree<op>* btree_registered, centerHeap<T>* center )
-{   extern int capacity_total;
-    extern int content_total;
+{   extern int capacity_total_1;
+    extern int capacity_total_2;
+    extern int capacity_total_3;
+    extern int content_total_1;
+    extern int content_total_2;
+    extern int content_total_3;
+    if(center->min == NULL) return;
     pop_patient_wrtddl(center->min,date+10,btree_registered,btree_appointment,date,center);  // The treatment is scheduled one day before DDL, so an appointment is required the day before
-    int rest_capacity = capacity_total - content_total;
+    int rest_capacity = 0;
+
+    switch(center->TreatType){
+        case 0:
+            rest_capacity = capacity_total_1 - content_total_1;
+            break;
+        case 1:
+            rest_capacity = capacity_total_2 - content_total_2;
+            break;
+        case 2:
+            rest_capacity = capacity_total_3 - content_total_3;
+            break;
+    }
    
        for (int i = 0; i < rest_capacity && center->min != NULL;i++){ // To prevent exceeding the daily capacity of all hospitals combined on that day
         patient_f temper =  retrievepatient_f(center->min->id);
@@ -71,19 +88,22 @@ template<class T> void  Maindata<T>::appointment_process(int date, BTree<op>* bt
             */
             
         }
-        patient_f tmper =  retrievepatient_f(center->min->id);
-        patient_f *tmp = &tmper;
-        tmp->treat_ddl  = date;
-        tmp->treat_time = date + 10;
-        op tmp_op = op(date,tmp->id);
-        op tmp_opre = op(tmp->time,tmp->id);
-        btree_registered->BTree_delete(tmp_opre);
-        btree_appointment->BTree_insert(tmp_op);
-        tmp->treat_hospital = center->check_nearest(tmp->loc);
-        modify(center->min->id,tmp);
-        //total_appointment_num++;
+        else{
+            patient_f tmper =  retrievepatient_f(center->min->id);
+            patient_f *tmp = &tmper;
+            tmp->treat_ddl  = date;
+            tmp->treat_time = date + 10;
+            op tmp_op = op(date,tmp->id);
+            op tmp_opre = op(tmp->time,tmp->id);
+            btree_registered->BTree_delete(tmp_opre);
+            btree_appointment->BTree_insert(tmp_op);
+            tmp->treat_hospital = center->check_nearest(tmp->loc,center->TreatType);
+            modify(center->min->id,tmp);
+            //total_appointment_num++;
+            
+            center->removeMin();
+        }
         
-        center->removeMin();
         
         
     }
@@ -98,8 +118,21 @@ template<class T> void Maindata<T>::mediumRisk_process(int date, BTree<op>* btre
     btree_delaytreated->find(tmp,list);
     for(int i = 0; i < list.size(); i++){
         patient_f tmper =  retrievepatient_f(list[i].ID);
+        if(tmper.id == -1){
+            cout<<"zhaobudao"<<endl;
+            continue;
+        }
         patient_f *tmp = &tmper;
-        tmp->treat_hospital = center->check_nearest(tmp->loc);
+        tmp->treat_hospital = center->check_nearest(tmp->loc,center->TreatType);
+        if(tmp->treat_hospital == -1){
+            btree_delaytreated->BTree_delete(list[i]);
+            list[i].time += 10;
+            tmp->treat_time += 10;
+            tmp->treat_ddl += 10;
+            modify(list[i].ID,tmp);
+            btree_delaytreated->BTree_insert(list[i]);
+           continue;
+        }
         modify(list[i].ID,tmp);
         op temper = op(tmp->time,tmp->id);
         btree_registered->BTree_delete(temper);
