@@ -95,6 +95,7 @@ template<class T> class Maindata
     int indx_to_id (int indx);
     bool search(int id);
     void modify(int id,patient_f* p);
+    void modify_withdrawl(int id, patient_f *p);
     void modifyperson(int id,patient_f* p);
     void modifystatus(int id,patient_f* p);
     void modifyregistration(int id,patient_f* p);

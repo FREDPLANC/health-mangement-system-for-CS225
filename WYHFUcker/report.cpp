@@ -25,19 +25,21 @@ template<class T> bool Maindata<T>::cmp(int x,int y)
 template<class T> void Maindata<T>:: report_treated(BTree<op>* btree_treated)
 {
     extern int week_counter;
-    string tempstr = to_string(week_counter);
-    tempstr = "treated" + tempstr;
+    string tempstr = to_string(week_counter - 1);
+    tempstr = "treated";
+    tempstr = tempstr + "_week" + to_string((week_counter-1)/3+1);
+    tempstr = tempstr + "_type" + to_string((week_counter-1)%3);
     tempstr = tempstr + ".txt";
     ofstream fout(tempstr);
 
-    int tmp_date = date_treat - 70;
+    int tmp_date = date_treat - 60;
     /*把时间扔进b树输出这部分人的id*/
     vector<op> b_treated;
     if (btree_treated == NULL)
     {
         return;
     }
-    for (int i=tmp_date; i<=date_treat; i++)
+    for (int i=tmp_date; i<=date_treat; i+=10)
     {
         op op1(i,0);
         btree_treated->find(op1,b_treated);
@@ -70,7 +72,7 @@ template<class T> void Maindata<T>:: report_treated(BTree<op>* btree_treated)
         fout<<this->retrieveperson(*iter)->prof<<",";
         fout<<this->retrieveperson(*iter)->birthday<<",";
         fout<<this->retrievestatus(*iter)->risk<<",";
-        fout<<date_treat - (this->retrievepatient_f(*iter).treat_time) <<","<<endl;
+        fout<<(date_treat - (this->retrievepatient_f(*iter).time))/10<<" days"<<endl;
     }
     fout.close();
 }
@@ -79,12 +81,14 @@ template<class T> void Maindata<T>:: report_treated(BTree<op>* btree_treated)
 template<class T> void Maindata<T>:: report_appointment(BTree<op>* btree_appointment)
 {
     extern int week_counter;
-    string tempstr = to_string(week_counter);
-    tempstr = "appointment" + tempstr;
+    string tempstr = to_string(week_counter-1);
+    tempstr = "appointment";
+    tempstr = tempstr + "_week" + to_string((week_counter-1)/3+1);
+    tempstr = tempstr + "_type" + to_string((week_counter-1)%3);
     tempstr = tempstr + ".txt";
     ofstream fout(tempstr);
     
-    int tmp_date = date_treat - 70;
+    int tmp_date = date_treat - 60;
     /*把时间扔进b树输出这部分人的id*/
     vector<op> b_appointment ;
     if (btree_appointment == NULL)
@@ -124,7 +128,9 @@ template<class T> void Maindata<T>:: report_appointment(BTree<op>* btree_appoint
         fout<<this->retrieveperson(*iter)->prof<<",";
         fout<<this->retrieveperson(*iter)->birthday<<",";
         fout<<this->retrievestatus(*iter)->risk<<",";
-        fout<<this->retrievepatient_f(*iter).time<<","<<endl;
+        fout<<(this->retrievepatient_f(*iter).time)/1000<<" months"<<",";
+        fout<<((this->retrievepatient_f(*iter).time)%100)/10<<" days";
+        fout<<endl;
     }
     fout.close();
 }
@@ -133,12 +139,14 @@ template<class T> void Maindata<T>:: report_appointment(BTree<op>* btree_appoint
 template<class T> void Maindata<T>:: report_registered(BTree<op>* btree_registered)
 {
     extern int week_counter;
-    string tempstr = to_string(week_counter);
-    tempstr = "registered" + tempstr;
+    string tempstr = to_string(week_counter-1);
+    tempstr = "registered";
+    tempstr = tempstr + "_week" + to_string((week_counter-1)/3+1);
+    tempstr = tempstr + "_type" + to_string((week_counter-1)%3);
     tempstr = tempstr + ".txt";
     ofstream fout(tempstr);
 
-    int tmp_date = date_treat - 70;
+    int tmp_date = date_treat - 60;
     /*把时间扔进b树输出这部分人的id*/
     vector<op> b_registered ;
     if (btree_registered == NULL)
@@ -177,7 +185,7 @@ template<class T> void Maindata<T>:: report_registered(BTree<op>* btree_register
         fout<<this->retrieveperson(*iter)->prof<<",";
         fout<<this->retrieveperson(*iter)->birthday<<",";
         fout<<this->retrievestatus(*iter)->risk<<",";
-        fout<<this->retrievepatient_f(*iter).treat_time- this->retrievepatient_f(*iter).time<<","<<endl;
+        fout<<(date_treat- this->retrievepatient_f(*iter).time)/10<<" days"<<","<<endl;
     }
     fout.close();
 }
@@ -203,23 +211,27 @@ template<class T> void Maindata<T>:: month_report(BTree<op>* btree_treated,BTree
     int tmp_date = date_treat;
     if (month==1||month==3||month==5||month==7||month==8||month==10||month==12)
     {
-        tmp_date = tmp_date - 310;
+        tmp_date = tmp_date - 300;
     }
     if (month==4||month==6||month==9||month==11)
     {
-        tmp_date = tmp_date - 300;
+        tmp_date = tmp_date - 290;
     }
     if (month==2)
     {
-        tmp_date = tmp_date - 280;
+        tmp_date = tmp_date - 270;
     }
     /**********************************************************treated********************************************************************/
     vector<op> month_treated ;
     int treated = 0;
-    for (int i=tmp_date; i<=date_treat; i++)
+    for (int i=tmp_date; i<=date_treat; i = i + 10)
     {
         op op1(i,0);
         btree_treated->find(op1,month_treated);
+        
+    }
+    for (vector<op>::iterator iter = month_treated.begin(); iter != month_treated.end(); iter++)
+    {
         treated++;
     }
     /*把这部分人id扔进b+树输出block的index*/
@@ -242,9 +254,17 @@ template<class T> void Maindata<T>:: month_report(BTree<op>* btree_treated,BTree
     int waiting_time = 0;
     for (vector<int>::iterator iter = relate_treated.begin(); iter != relate_treated.end(); iter++)
     {
-        waiting_time = waiting_time + date_treat-this->retrievepatient_f(*iter).treat_time;
+        waiting_time = waiting_time + this->retrievepatient_f(*iter).treat_time - this->retrievepatient_f(*iter).time;
     }
-    waiting_time = waiting_time / treated;
+    if (treated == 0)
+    {
+        waiting_time = 0;
+    }
+    else
+    {
+        waiting_time = waiting_time / treated;
+    }
+    
     /**************************************************************registered*******************************************************/
     vector<op> month_registered;
     int registered = 0;
@@ -252,6 +272,9 @@ template<class T> void Maindata<T>:: month_report(BTree<op>* btree_treated,BTree
     {
         op op1(i,0);
         btree_registered->find(op1,month_registered);
+    }
+    for (vector<op>::iterator iter = month_registered.begin(); iter != month_registered.end(); iter++)
+    {
         registered++;
     }
     /**************************************************************appointment******************************************************/
@@ -261,12 +284,16 @@ template<class T> void Maindata<T>:: month_report(BTree<op>* btree_treated,BTree
     {
         op op1(i,0);
         btree_appointment->find(op1,month_appointment);
+        
+    }
+    for (vector<op>::iterator iter = month_appointment.begin(); iter != month_appointment.end(); iter++)
+    {
         appointment++;
     }
     
     fout<<"The number of people who have registered is "<<registered+treated+appointment<<endl;
     fout<<"The number of people who are waiting is "<<appointment<<endl;
-    fout<<"The number of people who are waiting in total is "<<registered-treated<<endl;
+    fout<<"The number of people who are waiting in total is "<<registered+appointment<<endl;
     fout<<"The number of treatment appointment which have been made is "<<treated+appointment<<endl;
     fout<<"The average waiting time is "<<waiting_time<<endl;
     fout<<"The number of people who withdrew is "<<withdraw<<endl;

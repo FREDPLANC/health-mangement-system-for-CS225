@@ -58,17 +58,17 @@ class patient_f {
 			//
         	birth=c.birth;//
         	risk=c.risk;//
-        	time=c.time;//
+        	time=c.time;//注册时间
         
         	aging=c.aging;//
     
-			treat_ddl=c.treat_ddl;//
+			treat_ddl=c.treat_ddl;//ddl
 			loc=c.loc;//
 			strcpy(name,c.name);//
 			strcpy(contact,c.contact);//
 			strcpy(address,c.address);//
-			status = c.status;
-            treat_time = c.treat_time;
+			status = c.status;//54188
+            treat_time = c.treat_time;//治疗时间
             treatment_type = c.treatment_type;
             treat_hospital = c.treat_hospital;
 		}

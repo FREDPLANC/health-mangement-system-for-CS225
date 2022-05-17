@@ -16,13 +16,14 @@ using namespace std;
 
 
 
+
 template <class T>
 void Maindata<T>::build( BTree<op>* btree_registered_1 , BTree<op>* btree_appointment_1, BTree<op>* btree_delaytreated_1,BTree<op>* btree_registered_2 , BTree<op>* btree_appointment_2, BTree<op>* btree_delaytreated_2,BTree<op>* btree_registered_3 , BTree<op>* btree_appointment_3, BTree<op>* btree_delaytreated_3)
 {//Add local queues to the central heap
     
-    localQueue <patient_f*> Q1 = build_queue(btree_registered_1); //first build the local queue;
-    localQueue<patient_f*> Q2 = build_queue(btree_registered_2);
-    localQueue<patient_f*> Q3 = build_queue(btree_registered_3);
+    localQueue <patient_f*> Q1 = build_queue(); //first build the local queue;
+    localQueue<patient_f*> Q2 = build_queue();
+    localQueue<patient_f*> Q3 = build_queue();
     int k=0;
     int l1 = Q1.getlength();
     int l2 = Q2.getlength();
@@ -50,7 +51,7 @@ void Maindata<T>::build( BTree<op>* btree_registered_1 , BTree<op>* btree_appoin
            
         }else{
             if(this->search(p1.id) == 1){
-                modify(p1.id,p_temp);
+                modify_withdrawl(p1.id,p_temp);
             }
         }
         //add_patient(p1); //first pop the content of the queue one by one
@@ -82,7 +83,7 @@ void Maindata<T>::build( BTree<op>* btree_registered_1 , BTree<op>* btree_appoin
            
         }else{
             if(this->search(p2.id) == 1){
-                modify(p2.id,p_temp);
+                modify_withdrawl(p2.id,p_temp);
             }
         }
         //add_patient(p2);
@@ -112,7 +113,7 @@ void Maindata<T>::build( BTree<op>* btree_registered_1 , BTree<op>* btree_appoin
            
         }else{
             if(this->search(p3.id) == 1){
-                modify(p3.id,p_temp);
+                modify_withdrawl(p3.id,p_temp);
             }
         }
         //add_patient(p3);

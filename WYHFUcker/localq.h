@@ -130,7 +130,7 @@ int content_total_3 = 0;
 int capacity_total_1 = 0;
 int capacity_total_2 = 0;
 int capacity_total_3 = 0;
-localQueue<patient_f*> build_queue (BTree<op> *btree_registered);
+localQueue<patient_f*> build_queue ();
 
 #endif
 

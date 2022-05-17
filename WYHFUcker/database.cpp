@@ -7,6 +7,7 @@
 using namespace std;
 #include "database.h"
 #include "relationType.h"
+extern int date_treat;
 
 extern int data_number;
 extern int Global_block_count;
@@ -38,6 +39,12 @@ template <class T> void Maindata<T>::modify(int id,patient_f* p)
     medical_status.modify(id,p);
     registration.modify(id,p);
     treatment.modify(id,p);
+    return;
+}
+template <class T> void Maindata<T>::modify_withdrawl(int id,patient_f* p)
+{
+    Registration * temp = registration.retrieve(id);
+    temp ->status = p->status;
     return;
 }
 template <class T> void Maindata<T>::modifyperson(int id,patient_f* p)
@@ -87,6 +94,8 @@ template <class T> bool Maindata<T>::add_patient(patient_f p,BTree<op>* btree_re
         }
         else{
             center1->insert(p);
+            op tmp = op(date_treat,p.id);
+            btree_registered_1->BTree_insert(tmp);
             
         }
         //center1.add_patient(p);
@@ -98,6 +107,8 @@ template <class T> bool Maindata<T>::add_patient(patient_f p,BTree<op>* btree_re
         }
         else{
             center2->insert(p);
+            op tmp = op(date_treat,p.id);
+            btree_registered_2->BTree_insert(tmp);
             
         }
         //center1.add_patient(p);
@@ -110,6 +121,8 @@ template <class T> bool Maindata<T>::add_patient(patient_f p,BTree<op>* btree_re
         }
         else{
             center3->insert(p);
+            op tmp = op(date_treat,p.id);
+            btree_registered_3->BTree_insert(tmp);
             
         }
         //center1.add_patient(p);

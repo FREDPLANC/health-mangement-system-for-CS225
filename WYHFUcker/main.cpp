@@ -60,6 +60,25 @@ void half_day_process(){ // when time flows a day, it needs the following steps
     center.mediumRisk_process(date_treat, &btree_delaytreated_3, &btree_treated_3, &btree_appointment_3, &btree_registered_3, center.center3);
     center.treatment_process(date_treat, &btree_delaytreated_3, &btree_treated_3, &btree_appointment_3, &btree_registered_3, center.center3); // treat queue generated
     center.appointment_process(date_treat, &btree_delaytreated_3, &btree_treated_3, &btree_appointment_3, &btree_registered_3, center.center3); // appointment queue generated
+    cout<<"1abc"<<endl;
+        btree_treated_1.printpoint();
+        
+        cout<<"2abc"<<endl;
+        btree_treated_2.printpoint();
+        cout<<"3abc"<<endl;
+        btree_treated_3.printpoint();
+        cout<<"1abc"<<endl;
+        btree_registered_1.printpoint();
+        cout<<"2abc"<<endl;
+        btree_registered_2.printpoint();
+        cout<<"3abc"<<endl;
+        btree_registered_3.printpoint();
+        cout<<"1abc"<<endl;
+        btree_appointment_1.printpoint();
+        cout<<"2abc"<<endl;
+        btree_appointment_2.printpoint();
+        cout<<"3abc"<<endl;
+        btree_appointment_3.printpoint();
 }
 
 

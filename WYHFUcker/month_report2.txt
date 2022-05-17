@@ -1,0 +1,6 @@
+The number of people who have registered is 55
+The number of people who are waiting is 2
+The number of people who are waiting in total is 8
+The number of treatment appointment which have been made is 49
+The average waiting time is 20
+The number of people who withdrew is 0
